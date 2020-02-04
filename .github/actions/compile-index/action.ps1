@@ -71,7 +71,8 @@ function Get-LatestReleaseInfo {
     Headers                 = $requestHeaders
     ResponseHeadersVariable = 'resHeaders'
   }
-  $latestRelease = Invoke-RestMethod @latestParams -ErrorAction Ignore
+  Write-Host $requestHeaders.Values
+  $latestRelease = Invoke-RestMethod @latestParams -ErrorAction Ignore -Verbose
   # check status header
   # TODO should use ResponseStatusCodeVariable when pwsh 7 is available,
   # but we're 'happy' as is, since GitHub sends a 'Status' header as well
@@ -83,14 +84,21 @@ function Get-LatestReleaseInfo {
   elseif ($resHeaders.Status -match "^200") {
     Write-Host "Update found: $Repository"
     # new content
-    $indexJson = Invoke-RestMethod @indexJsonParams "https://github.com/$Repository/releases/latest/download/$repoName.index.catpkg.json"
+    $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.index.catpkg.json"
+    $headers = [ordered]@{}
+    if ($resHeaders.ETag) {
+      $headers.'ETag' = $resHeaders.ETag -as [string]
+    }
+    if ($resHeaders.'Last-Modified') {
+      $headers.'Last-Modified' = $resHeaders.'Last-Modified' -as [string]
+    }
     $NewRelease = [ordered]@{
-      'api-response-headers' = [ordered]@{
-        'ETag'          = $resHeaders.ETag | Select-Object -First 1
-        'Last-Modified' = $resHeaders.'Last-Modified' | Select-Object -First 1
-      }
+      'api-response-headers' = $headers
       'api-response-content' = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
       'index'                = $indexJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
+    }
+    if ($headers.Count -eq 0) {
+      $NewRelease.Remove('api-response-headers') | Out-Null
     }
     # currently needed because of a couple of fields like battleScribeVersion
     return $NewRelease
@@ -112,7 +120,6 @@ $registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | ForEach-Obje
     registryFile = $_
   }
 } | ConvertTo-HashTable -Key { $_.name }
-
 Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
   $entry = $registry[$_.Name]
   if (-not $entry) {
@@ -140,9 +147,12 @@ $registry.Values | ForEach-Object {
   $repository = $index.location.github
   $owner, $repoName = $repository -split '/'
   Write-Host "Getting latest release info."
-  $index.'latest-release' = Get-LatestReleaseInfo $repository $index.'latest-release' -Token $token
+  $index.'latest-release' = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
+  
+  Write-Host "Saving latest release info."
+  $index | ConvertTo-Yaml
   $indexYmlPath = (Join-Path $indexPath $_.name)
-  $index | ConvertTo-Yaml -OutFile $indexYmlPath -Force
+  $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
   Write-Host "Saved."
 }
 
