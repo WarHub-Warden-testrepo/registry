@@ -1,0 +1,13 @@
+type: registration
+location:
+  github: amis92/test-data # owner/id defaults - either this or id+owner+urls.repository is required
+# id: test-data # if location.github specified, second part, otherwise required
+# owner: amis92 # if location.github specified, first part, otherwise required
+name: Test Data # optional
+urls:
+  owner: # if location.github specified defaults to https://github.com/${owner}
+  repository: # if location.github specified defaults to https://github.com/${github}
+  catpkg-index: # if location.github specified defaults to https://github.com/${github}/releases/lastest/downloads/index.catpkg.json
+
+options:
+  hidden: false # set to true to inform apps that they shouldn't display this entry

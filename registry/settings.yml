@@ -1,0 +1,14 @@
+type: registry-settings
+gallery:
+  name: BSData
+  description: Community created catpkg packages for roster editors (BattleScribe)
+  indexJsonUrls:
+    repositorySourceUrl: # url of gallery index json
+    websiteUrl: # url of gallery website
+    githubUrl: # url of gallery owner's site
+    discordUrl: # url of gallery owner's discord
+    # feedUrl: # url of Atom feed combining all package feeds
+    twitterUrl: # url of gallery owner's twitter account
+    facebookUrl: # url of gallery owner's facebook page
+registrations:
+  path: entries # folder where entries are saved (in yml files)
