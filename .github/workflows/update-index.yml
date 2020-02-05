@@ -37,8 +37,8 @@ jobs:
         shell: pwsh
         working-directory: ./index
         run: |
-          $pkgids = (git status --porcelain | % { $_.Substring(3) } | Split-Path -Leaf) -replace '\.catpkg\.yml$',''
-          if (-not $pkgids) {
+          $pkgids = @((git status --porcelain | % { $_.Substring(3) } | Split-Path -Leaf) -replace '\.catpkg\.yml$','')
+          if ($pkgids.Length -eq 0) {
             Write-Host 'No changes in the index' -ForegroundColor Green
             exit 0
           }
