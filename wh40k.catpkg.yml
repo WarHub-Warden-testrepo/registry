@@ -2,7 +2,7 @@ location:
   github: amis92/wh40k
 latest-release:
   api-response-headers:
-    ETag: '"e5606bceb6f5a6b5a1f3d1bdf3a3b67c"'
+    ETag: '"9756becaecd9d08ade70bff207f8f341"'
     Last-Modified: Wed, 05 Feb 2020 18:26:27 GMT
   api-response-content:
     tag_name: v1.5.14
