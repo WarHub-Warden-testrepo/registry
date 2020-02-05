@@ -102,12 +102,12 @@ function Get-LatestReleaseInfo {
   $NewRelease = [ordered]@{
     'api-response-headers' = $headers
     'api-response-content' = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
+    # currently needed because of a couple of fields like battleScribeVersion:
     'index'                = $indexJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
   }
   if ($headers.Count -eq 0) {
     $NewRelease.Remove('api-response-headers') | Out-Null
   }
-  # currently needed because of a couple of fields like battleScribeVersion
   return $NewRelease
 }
 
