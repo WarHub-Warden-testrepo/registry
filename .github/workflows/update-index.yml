@@ -66,17 +66,22 @@ jobs:
               ...context.repo,
               tag: '${{ env.RELEASE_TAG }}'
             });
-            const assetName = '${{ env.GALLERY_JSON }}'
+            console.log('Release retrieved');
+            const assetName = '${{ env.GALLERY_JSON }}';
             const previousIndex = release.assets.find(x => x.name === assetName);
             if (previousIndex) {
+              console.log('Deleting existing asset');
               await github.repos.deleteReleaseAsset({
                 ...context.repo,
                 asset_id: previousIndex.id
               });
             }
+            console.log('Done');
             return release.upload_url;
       - name: Upload gallery index
         uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.get-upload-url.outputs.result }}
           asset_path: ${{ env.GALLERY_JSON }}
