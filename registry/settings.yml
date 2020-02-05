@@ -2,13 +2,14 @@ type: registry-settings
 gallery:
   name: BSData
   description: Community created catpkg packages for roster editors (BattleScribe)
-  indexJsonUrls:
-    repositorySourceUrl: # url of gallery index json
-    websiteUrl: # url of gallery website
-    githubUrl: # url of gallery owner's site
-    discordUrl: # url of gallery owner's discord
-    # feedUrl: # url of Atom feed combining all package feeds
-    twitterUrl: # url of gallery owner's twitter account
-    facebookUrl: # url of gallery owner's facebook page
+  urls:
+    # url of gallery index json
+    repositorySourceUrl: https://github.com/WarHub-Warden-testrepo/registry/releases/downloads/latest/bsdata.catpkg-gallery.json
+    websiteUrl: https://battlescribedata.appspot.com # url of gallery website
+    githubUrl: https://github.com/WarHub-Warden-testrepo/registry # url of gallery owner's site
+    discordUrl: https://discord.gg/KqPVhds # url of gallery owner's discord
+    feedUrl: http://battlescribedata.appspot.com/repos/feeds/all.atom # url of Atom feed combining all package feeds
+    twitterUrl: https://twitter.com/BSData # url of gallery owner's twitter account
+    facebookUrl: https://facebook.com/BattleScribeData # url of gallery owner's facebook page
 registrations:
   path: entries # folder where entries are saved (in yml files)

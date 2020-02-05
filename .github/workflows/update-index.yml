@@ -1,0 +1,84 @@
+name: Update index
+on:
+  schedule:
+    - cron: '0 12 * * *' # every day at 12:00 UTC
+  push:
+    branches:
+      - master
+    paths:
+      - 'registry/**'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      GALLERY_JSON: bsdata.catpkg-gallery.json
+      RELEASE_TAG: index-v1
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: master
+      - name: Checkout index
+        uses: actions/checkout@v2
+        with:
+          ref: index
+          path: index
+          token: ${{ secrets.BSDATABOT_TOKEN }}
+      - name: Compile index
+        uses: ./.github/actions/compile-index
+        id: compile
+        with:
+          index-path: ./index
+          registry-path: ./master/registry
+          gallery-json-path: ${{ env.GALLERY_JSON }}
+      - name: Commit and push any index changes
+        shell: pwsh
+        working-directory: ./index
+        run: |
+          $pkgids = (git status --porcelain | % { $_.Substring(3) } | Split-Path -Leaf) -replace '\.catpkg\.yml$',''
+          if (-not $pkgids) {
+            Write-Host 'No changes in the index' -ForegroundColor Green
+            exit 0
+          }
+          $summary = if ($pkgids.Length -eq 1) {
+            $pkgids
+          } else {
+            "{0} (+{1} more)" -f $pkgids[0],($pkgids.Length - 1)
+          }
+          @"
+          Changed: $summary
+
+          $($pkgids -join "`n")
+          "@ > ../commit.txt
+          git add *.yml
+          git commit -F ../commit.txt
+          git push
+      - name: Get release upload_url (and delete old asset if found)
+        uses: actions/github-script@0.4.0
+        id: get-upload-url
+        with:
+          github-token: ${{ github.token }}
+          result-encoding: string
+          script: |
+            const { data: release } = await github.repos.getReleaseByTag({
+              ...context.repo,
+              tag: '${{ env.RELEASE_TAG }}'
+            });
+            const assetName = '${{ env.GALLERY_JSON }}'
+            const previousIndex = release.assets.find(x => x.name === assetName);
+            if (previousIndex) {
+              await github.repos.deleteReleaseAsset({
+                ...context.repo,
+                asset_id: previousIndex.id
+              });
+            }
+            return release.upload_url;
+      - name: Upload gallery index
+        uses: actions/upload-release-asset@v1.0.1
+        with:
+          upload_url: ${{ steps.get-upload-url.outputs.result }}
+          asset_path: ${{ env.GALLERY_JSON }}
+          asset_name: ${{ env.GALLERY_JSON }}
+          asset_content_type: application/json

@@ -100,8 +100,8 @@ $token = Get-ActionInput 'token'
 
 # read settings
 [string]$regSettingsPath = Join-Path $registryPath settings.yml
-$regSettings = Get-Content $regSettingsPath -Raw | ConvertFrom-Yaml
-$registrationsPath = Join-Path $registryPath $regSettings.registrations.path
+$settings = Get-Content $regSettingsPath -Raw | ConvertFrom-Yaml
+$registrationsPath = Join-Path $registryPath $settings.registrations.path
 
 # read registry entries
 $registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | ForEach-Object {
@@ -121,11 +121,12 @@ Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
 }
 
 # process all entries
-$registry.Values | ForEach-Object {
+$entries = $registry.Values | ForEach-Object {
   Write-Host ("Processing: " + $_.name)
   if (-not $_.registryFile) {
     Write-Host "Index entry not in registry, removing."
     Remove-Item $_.indexFile
+    return
   }
   $registration = $_.registryFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
   if ($_.indexFile) {
@@ -145,6 +146,24 @@ $registry.Values | ForEach-Object {
   $indexYmlPath = (Join-Path $indexPath $_.name)
   $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
   Write-Host "Saved."
+  return $index
 }
 
-Write-Host "Done"
+$galleryJsonPath = Get-ActionInput gallery-json-path
+if (-not $galleryJsonPath) {
+  Write-Host "Done"
+  exit 0
+}
+
+$entriesWithRelease = $entries | Where-Object { $null -ne $_.'latest-release' }
+
+$galleryJsonContent = [ordered]@{
+  '$schema' = 'https://raw.githubusercontent.com/BSData/schemas/master/src/catpkg.schema.json'
+  name = $settings.gallery.name
+  description = $settings.gallery.description
+  battleScribeVersion = ($entriesWithRelease.'latest-release'.battleScribeVersion | Sort-Object -Bottom 1) -as [string]
+} + $settings.gallery.urls + @{
+  repositories = @($entriesWithRelease.'latest-release')
+}
+
+$galleryJsonContent | ConvertTo-Json | Set-Content $galleryJsonPath -Force
