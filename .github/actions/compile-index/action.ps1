@@ -84,33 +84,31 @@ function Get-LatestReleaseInfo {
     Write-Host "Up to date: $Repository"
     return $SavedRelease
   }
-  elseif ($resHeaders.Status -match "^200") {
-    Write-Host "Update found: $Repository"
-    # new content
-    $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
-    $headers = [ordered]@{}
-    if ($resHeaders.ETag) {
-      $headers.'ETag' = $resHeaders.ETag -as [string]
-    }
-    if ($resHeaders.'Last-Modified') {
-      $headers.'Last-Modified' = $resHeaders.'Last-Modified' -as [string]
-    }
-    $NewRelease = [ordered]@{
-      'api-response-headers' = $headers
-      'api-response-content' = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
-      'index'                = $indexJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
-    }
-    if ($headers.Count -eq 0) {
-      $NewRelease.Remove('api-response-headers') | Out-Null
-    }
-    # currently needed because of a couple of fields like battleScribeVersion
-    return $NewRelease
-  }
-  else {
+  elseif (-not $resHeaders.Status -match "^200") {
     # error received
     Write-Error $latestRelease
     return $null
   }
+  Write-Host "Update found: $Repository"
+  # new content
+  $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
+  $headers = [ordered]@{}
+  if ($resHeaders.ETag) {
+    $headers.'ETag' = $resHeaders.ETag -as [string]
+  }
+  if ($resHeaders.'Last-Modified') {
+    $headers.'Last-Modified' = $resHeaders.'Last-Modified' -as [string]
+  }
+  $NewRelease = [ordered]@{
+    'api-response-headers' = $headers
+    'api-response-content' = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
+    'index'                = $indexJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
+  }
+  if ($headers.Count -eq 0) {
+    $NewRelease.Remove('api-response-headers') | Out-Null
+  }
+  # currently needed because of a couple of fields like battleScribeVersion
+  return $NewRelease
 }
 
 # read settings
