@@ -101,9 +101,9 @@ $token = Get-ActionInput 'token'
 # read settings
 [string]$regSettingsPath = Join-Path $registryPath settings.yml
 $regSettings = Get-Content $regSettingsPath -Raw | ConvertFrom-Yaml
+$registrationsPath = Join-Path $registryPath $regSettings.registrations.path
 
 # read registry entries
-$registrationsPath = Join-Path $registryPath $regSettings.registrations.path
 $registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | ForEach-Object {
   return @{
     name         = $_.name
@@ -113,7 +113,7 @@ $registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | ForEach-Obje
 # zip entries with existing index entries
 Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
   $entry = $registry[$_.Name]
-  if (-not $entry) {
+  if ($null -eq $entry) {
     $entry = @{ name = $_.Name }
     $registry[$_.Name] = $entry
   }
@@ -146,3 +146,5 @@ $registry.Values | ForEach-Object {
   $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
   Write-Host "Saved."
 }
+
+Write-Host "Done"
