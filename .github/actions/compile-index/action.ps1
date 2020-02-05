@@ -156,14 +156,14 @@ if (-not $galleryJsonPath) {
 }
 
 $entriesWithRelease = $entries | Where-Object { $null -ne $_.'latest-release' }
-
+$entryIndexes =  @($entriesWithRelease.'latest-release'.index)
 $galleryJsonContent = [ordered]@{
   '$schema' = 'https://raw.githubusercontent.com/BSData/schemas/master/src/catpkg.schema.json'
   name = $settings.gallery.name
   description = $settings.gallery.description
-  battleScribeVersion = ($entriesWithRelease.'latest-release'.battleScribeVersion | Sort-Object -Bottom 1) -as [string]
+  battleScribeVersion = ($entryIndexes.battleScribeVersion | Sort-Object -Bottom 1) -as [string]
 } + $settings.gallery.urls + @{
-  repositories = @($entriesWithRelease.'latest-release')
+  repositories = $entryIndexes
 }
 
 $galleryJsonContent | ConvertTo-Json | Set-Content $galleryJsonPath -Force
