@@ -9,6 +9,7 @@ $registryPath = Get-ActionInput 'registry-path'
 $indexPath = Get-ActionInput 'index-path'
 $token = Get-ActionInput 'token'
 
+# function to select truthy value: if not left, then right
 function val {
   param ($left, $right, $errmsg)
   if ($left) {
@@ -22,6 +23,7 @@ function val {
   }
 }
 
+# function to build hashtable from pipeline, selecting string keys for objects
 function ConvertTo-HashTable {
   [CmdletBinding()]
   [OutputType([hashtable])]
@@ -44,6 +46,7 @@ function ConvertTo-HashTable {
   }
 }
 
+# get latest release info as a ready-to-save hashtable
 function Get-LatestReleaseInfo {
   [CmdletBinding()]
   param (
@@ -84,7 +87,7 @@ function Get-LatestReleaseInfo {
   elseif ($resHeaders.Status -match "^200") {
     Write-Host "Update found: $Repository"
     # new content
-    $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.index.catpkg.json"
+    $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
     $headers = [ordered]@{}
     if ($resHeaders.ETag) {
       $headers.'ETag' = $resHeaders.ETag -as [string]
@@ -109,17 +112,20 @@ function Get-LatestReleaseInfo {
     return $null
   }
 }
+
+# read settings
 [string]$regSettingsPath = Join-Path $registryPath settings.yml
 $regSettings = Get-Content $regSettingsPath -Raw | ConvertFrom-Yaml
 
+# read registry entries
 $registrationsPath = Join-Path $registryPath $regSettings.registrations.path
-
 $registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | ForEach-Object {
   return @{
     name         = $_.name
     registryFile = $_
   }
 } | ConvertTo-HashTable -Key { $_.name }
+# zip entries with existing index entries
 Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
   $entry = $registry[$_.Name]
   if (-not $entry) {
@@ -129,6 +135,7 @@ Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
   $entry.indexFile = $_
 }
 
+# process all entries
 $registry.Values | ForEach-Object {
   Write-Host ("Processing: " + $_.name)
   if (-not $_.registryFile) {
@@ -150,47 +157,7 @@ $registry.Values | ForEach-Object {
   $index.'latest-release' = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
   
   Write-Host "Saving latest release info."
-  $index | ConvertTo-Yaml
   $indexYmlPath = (Join-Path $indexPath $_.name)
   $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
   Write-Host "Saved."
 }
-
-
-<# TODO
-
-  Compile current index and registry into a new up-to-date index.
-
-  prerequisites:
-  - registry of listed repositories/orgs
-  - an index containing latest release details
-    (index is split across multiple files, one for every "active" repo/pkg)
-
-  1. Combine registry with index (add, update, remove index entries)
-  2. For every index entry:
-    a. ask for 'latest' release from API (with 'If-Modified-Since' using Last-Updated details if available)
-        - if API returns 302 Not Modified, entry is up-to-date
-        - if API returns 404 Not Found (no release), set noRelease to true
-        - otherwise, entry requires update
-    b. update index entry with info from the API response:
-      - tag name
-      - release name
-      - release date
-      - Last-Updated and ETag headers from GitHub API
-    c. if tag name was the same, end processing this entry
-    d. if noRelease == true, end processing this entry
-    e. download index.catpkg.json - if failed, set noIndexJson to true
-    f. save necessary details from json to index entry
-
-#>
-
-<#
-- load reg settings
-- load reg entries (? including filenames ?)
-- (?) validate filenames match content's id
-- patch up registry entries with defaults (recreate index entry when owner changed?)
-- apply registry values onto corresponding index entries
-- new index entries should be monitored, and those that were removed
-- for every patched index entry, call latest release API and update the content with response
-- save all index entries as files
-#>
