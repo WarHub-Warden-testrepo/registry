@@ -25,7 +25,6 @@ jobs:
         with:
           ref: index
           path: index
-          token: ${{ secrets.BSDATABOT_TOKEN }}
       - name: Compile index
         uses: ./.github/actions/compile-index
         id: compile
