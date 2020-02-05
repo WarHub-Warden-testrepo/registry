@@ -27,7 +27,7 @@ jobs:
           ref: index
           path: index
       - name: Compile index
-        uses: ./.github/actions/compile-index
+        uses: ./master/.github/actions/compile-index
         id: compile
         with:
           index-path: ./index
