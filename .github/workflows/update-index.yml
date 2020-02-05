@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - 'registry/**'
-      - '.github/workflows/**'
+      - '.github/**'
 
 jobs:
   update:
