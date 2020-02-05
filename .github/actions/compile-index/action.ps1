@@ -56,8 +56,7 @@ function Get-LatestReleaseInfo {
     Headers                 = $requestHeaders
     ResponseHeadersVariable = 'resHeaders'
   }
-  Write-Host $requestHeaders.Values
-  $latestRelease = Invoke-RestMethod @latestParams -ErrorAction Ignore -Verbose
+  $latestRelease = Invoke-RestMethod @latestParams -ErrorAction Ignore
   # check status header
   # TODO should use ResponseStatusCodeVariable when pwsh 7 is available,
   # but we're 'happy' as is, since GitHub sends a 'Status' header as well
