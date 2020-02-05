@@ -48,9 +48,10 @@ function Get-LatestReleaseInfo {
   if ($savedHeaders.'Last-Modified') {
     $requestHeaders['If-Modified-Since'] = $savedHeaders.'Last-Modified'
   }
-  if ($savedHeaders.'ETag') {
-    $requestHeaders['If-None-Match'] = $savedHeaders.'ETag'
-  }
+  # ETags, turns out, change all the time in github api (at least for latest releases)
+  # if ($savedHeaders.'ETag') {
+  #   $requestHeaders['If-None-Match'] = $savedHeaders.'ETag'
+  # }
   $latestParams = @{
     Uri                     = "https://api.github.com/repos/$Repository/releases/latest"
     Headers                 = $requestHeaders
@@ -74,9 +75,9 @@ function Get-LatestReleaseInfo {
   # new content
   $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
   $headers = [ordered]@{}
-  if ($resHeaders.ETag) {
-    $headers.'ETag' = $resHeaders.ETag -as [string]
-  }
+  # if ($resHeaders.ETag) {
+  #   $headers.'ETag' = $resHeaders.ETag -as [string]
+  # }
   if ($resHeaders.'Last-Modified') {
     $headers.'Last-Modified' = $resHeaders.'Last-Modified' -as [string]
   }
