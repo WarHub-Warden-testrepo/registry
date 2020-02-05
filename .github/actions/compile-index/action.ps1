@@ -5,24 +5,6 @@ $ErrorActionPreference = 'Stop'
 Import-Module $PSScriptRoot/lib/GitHubActionsCore
 Import-Module $PSScriptRoot/lib/powershell-yaml
 
-$registryPath = Get-ActionInput 'registry-path'
-$indexPath = Get-ActionInput 'index-path'
-$token = Get-ActionInput 'token'
-
-# function to select truthy value: if not left, then right
-function val {
-  param ($left, $right, $errmsg)
-  if ($left) {
-    $left
-  }
-  elseif ($right -or !$errmsg) {
-    $right
-  }
-  else {
-    $errmsg
-  }
-}
-
 # function to build hashtable from pipeline, selecting string keys for objects
 function ConvertTo-HashTable {
   [CmdletBinding()]
@@ -110,6 +92,11 @@ function Get-LatestReleaseInfo {
   }
   return $NewRelease
 }
+
+# read inputs
+$registryPath = Get-ActionInput 'registry-path'
+$indexPath = Get-ActionInput 'index-path'
+$token = Get-ActionInput 'token'
 
 # read settings
 [string]$regSettingsPath = Join-Path $registryPath settings.yml
