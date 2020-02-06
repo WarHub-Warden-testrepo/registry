@@ -35,7 +35,7 @@ function Get-LatestReleaseInfo {
     [Parameter(Mandatory, Position = 0)]
     [string] $Repository,
     [Parameter()]
-    [hashtable] $SavedRelease,
+    [System.Collections.IDictionary] $SavedRelease,
     [Parameter()]
     [string] $Token
   )
@@ -67,7 +67,7 @@ function Get-LatestReleaseInfo {
       return $SavedRelease
     }
     # error received
-    Write-Error $latestRelease
+    Write-Error -Exception $_.Exception
     return $null
   }
   Write-Host "Update found: $Repository"
