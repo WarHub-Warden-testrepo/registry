@@ -1,3 +1,23 @@
 location:
   github: amis92/wh40k
+latest-release:
+  api-response-headers:
+    Last-Modified: Wed, 05 Feb 2020 18:26:27 GMT
+  api-response-content:
+    tag_name: v1.5.14
+    name: test bsdata action
+    published_at: 2020-02-05T18:26:27.0000000Z
+  index:
+    name: wh40k
+    description: Warhammer 40,000
+    battleScribeVersion: "2.03"
+    version: v1.5.14
+    lastUpdated: 2020-02-05T18:26:27.0000000Z
+    lastUpdateDescription: test bsdata action
+    indexUrl: https://github.com/amis92/wh40k/releases/latest/download/wh40k.latest.bsi
+    repositoryUrl: https://github.com/amis92/wh40k/releases/latest/download/wh40k.catpkg.json
+    githubUrl: https://github.com/amis92/wh40k
+    feedUrl: https://github.com/amis92/wh40k/releases.atom
+    bugTrackerUrl: https://github.com/amis92/wh40k/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/wh40k
 
