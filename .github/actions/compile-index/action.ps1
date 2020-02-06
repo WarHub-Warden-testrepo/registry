@@ -142,6 +142,7 @@ $entries = $registry.Values | ForEach-Object {
   $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
   if ($latestRelease -ne $index.'latest-release') {
     Write-Host "Saving latest release info."
+    $index.'latest-release' = $latestRelease
     $indexYmlPath = (Join-Path $indexPath $_.name)
     $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
     Write-Host "Saved."
