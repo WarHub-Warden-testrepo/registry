@@ -35,7 +35,7 @@ function Get-LatestReleaseInfo {
     [Parameter(Mandatory, Position = 0)]
     [string] $Repository,
     [Parameter()]
-    [hashtable] $SavedRelease = [ordered]@{ },
+    [hashtable] $SavedRelease,
     [Parameter()]
     [string] $Token
   )
@@ -139,12 +139,13 @@ $entries = $registry.Values | ForEach-Object {
   $repository = $index.location.github
   $owner, $repoName = $repository -split '/'
   Write-Host "Getting latest release info."
-  $index.'latest-release' = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
-  
-  Write-Host "Saving latest release info."
-  $indexYmlPath = (Join-Path $indexPath $_.name)
-  $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
-  Write-Host "Saved."
+  $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
+  if ($latestRelease -ne $index.'latest-release') {
+    Write-Host "Saving latest release info."
+    $indexYmlPath = (Join-Path $indexPath $_.name)
+    $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
+    Write-Host "Saved."
+  }
   return $index
 }
 
