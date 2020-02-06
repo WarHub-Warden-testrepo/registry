@@ -34,6 +34,7 @@ jobs:
           registry-path: ./master/registry
           gallery-json-path: ${{ env.GALLERY_JSON }}
       - name: Commit and push any index changes
+        id: push
         shell: pwsh
         working-directory: ./index
         run: |
@@ -58,8 +59,10 @@ jobs:
           git commit -F ../commit.txt
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           git push
+          Write-Host "::set-output name=pushed::true"
       - name: Get release upload_url (and delete old asset if found)
         uses: actions/github-script@0.4.0
+        if: steps.push.outputs.pushed
         id: get-upload-url
         with:
           github-token: ${{ github.token }}
@@ -83,6 +86,7 @@ jobs:
             return release.upload_url;
       - name: Upload gallery index
         uses: actions/upload-release-asset@v1.0.1
+        if: steps.push.outputs.pushed
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
