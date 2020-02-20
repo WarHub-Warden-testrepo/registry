@@ -55,7 +55,7 @@ function Get-LatestReleaseInfo {
   $latestParams = @{
     Uri                     = "https://api.github.com/repos/$Repository/releases/latest"
     Headers                 = $requestHeaders
-    ResponseHeadersVariable = 'resHeaders'
+    ResponseHeadersVariable = 'responseHeaders'
   }
   try {
     $latestRelease = Invoke-RestMethod @latestParams
@@ -67,18 +67,35 @@ function Get-LatestReleaseInfo {
       return $SavedRelease
     }
     # error received
-    Write-Error -Exception $_.Exception
-    return $null
+    Write-Error -Exception $_.Exception -ErrorAction:Continue
+    return [ordered]@{
+      'api-response-error' = [ordered]@{
+        'code' = $_.Exception.Response.StatusCode -as [int]
+        'message' = $_.Exception.Message
+      }
+    }
   }
   Write-Host "Update found: $Repository"
-  # new content
-  $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
+  # get content of the new catpkg
+  try {
+    $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
+  }
+  catch [Microsoft.PowerShell.Commands.HttpResponseException] {
+    # error received
+    Write-Error -Exception $_.Exception -ErrorAction:Continue
+    return [ordered]@{
+      'index-response-error' = [ordered]@{
+        'code' = $_.Exception.Response.StatusCode -as [int]
+        'message' = $_.Exception.Message
+      }
+    }
+  }
   $headers = [ordered]@{}
-  # if ($resHeaders.ETag) {
-  #   $headers.'ETag' = $resHeaders.ETag -as [string]
+  # if ($responseHeaders.ETag) {
+  #   $headers.'ETag' = $responseHeaders.ETag -as [string]
   # }
-  if ($resHeaders.'Last-Modified') {
-    $headers.'Last-Modified' = $resHeaders.'Last-Modified' -as [string]
+  if ($responseHeaders.'Last-Modified') {
+    $headers.'Last-Modified' = $responseHeaders.'Last-Modified' -as [string]
   }
   $NewRelease = [ordered]@{
     'api-response-headers' = $headers
@@ -121,7 +138,7 @@ Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
 
 # process all entries
 $entries = $registry.Values | ForEach-Object {
-  Write-Host ("Processing: " + $_.name)
+  Write-Host ("-> Processing: " + $_.name)
   if (-not $_.registryFile) {
     Write-Host "Index entry not in registry, removing."
     Remove-Item $_.indexFile
@@ -156,7 +173,7 @@ if (-not $galleryJsonPath) {
   exit 0
 }
 
-$entriesWithRelease = $entries | Where-Object { $null -ne $_.'latest-release' }
+$entriesWithRelease = $entries | Where-Object { $null -ne $_.'latest-release' -and $null -ne $_.'latest-release'.index }
 $entryIndexes =  @($entriesWithRelease.'latest-release'.index)
 $galleryJsonContent = [ordered]@{
   '$schema' = 'https://raw.githubusercontent.com/BSData/schemas/master/src/catpkg.schema.json'
