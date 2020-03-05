@@ -148,6 +148,8 @@ $entries = $registry.Values | ForEach-Object {
   if ($_.indexFile) {
     Write-Host "Reading index entry."
     $index = $_.indexFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
+    # compare registry and index, if location differs, use registration thus forcing refresh
+    $index = if ($index.location.github -ne $registration.location.github) { $registration } else { $index }
   }
   else {
     Write-Host "Reading registry entry."
