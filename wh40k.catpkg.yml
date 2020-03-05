@@ -1,7 +1,23 @@
 location:
-  github: amis92/wh40k
+  github: BSData/wh40k
 latest-release:
-  api-response-error:
-    code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
+  api-response-headers:
+    Last-Modified: Sat, 29 Feb 2020 21:05:36 GMT
+  api-response-content:
+    tag_name: v1.4.11
+    name: No Mr. Priest, You Cannot "Take Whatever"
+    published_at: 2020-02-29T21:04:50.0000000Z
+  index:
+    name: wh40k
+    description: Warhammer 40,000
+    battleScribeVersion: "2.03"
+    version: v1.4.11
+    lastUpdated: 2020-02-29T21:04:50.0000000Z
+    lastUpdateDescription: No Mr. Priest, You Cannot "Take Whatever"
+    indexUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.latest.bsi
+    repositoryUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.catpkg.json
+    githubUrl: https://github.com/BSData/wh40k
+    feedUrl: https://github.com/BSData/wh40k/releases.atom
+    bugTrackerUrl: https://github.com/BSData/wh40k/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/wh40k
 
