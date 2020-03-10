@@ -1,0 +1,7 @@
+location:
+  github: BSData/freebooters-fate
+latest-release:
+  index-response-error:
+    code: 404
+    message: 'Response status code does not indicate success: 404 (Not Found).'
+

@@ -1,0 +1,7 @@
+location:
+  github: BSData/zone-raiders
+latest-release:
+  api-response-error:
+    code: 404
+    message: 'Response status code does not indicate success: 404 (Not Found).'
+
