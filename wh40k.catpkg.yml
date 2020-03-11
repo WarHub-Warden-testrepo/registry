@@ -2,18 +2,18 @@ location:
   github: BSData/wh40k
 latest-release:
   api-response-headers:
-    Last-Modified: Sat, 29 Feb 2020 21:05:36 GMT
+    Last-Modified: Wed, 11 Mar 2020 16:56:05 GMT
   api-response-content:
-    tag_name: v1.4.11
-    name: No Mr. Priest, You Cannot "Take Whatever"
-    published_at: 2020-02-29T21:04:50.0000000Z
+    tag_name: v1.4.12
+    name: All the small things (and some bigger ones)
+    published_at: 2020-03-11T16:55:48.0000000Z
   index:
     name: wh40k
     description: Warhammer 40,000
     battleScribeVersion: "2.03"
-    version: v1.4.11
-    lastUpdated: 2020-02-29T21:04:50.0000000Z
-    lastUpdateDescription: No Mr. Priest, You Cannot "Take Whatever"
+    version: v1.4.12
+    lastUpdated: 2020-03-11T16:55:48.0000000Z
+    lastUpdateDescription: All the small things (and some bigger ones)
     indexUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.latest.bsi
     repositoryUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.catpkg.json
     githubUrl: https://github.com/BSData/wh40k
