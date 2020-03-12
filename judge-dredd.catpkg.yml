@@ -1,7 +1,23 @@
 location:
   github: BSData/judge-dredd
 latest-release:
-  index-response-error:
-    code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
+  api-response-headers:
+    Last-Modified: Thu, 12 Mar 2020 20:49:16 GMT
+  api-response-content:
+    tag_name: V1.6
+    name: Citizens, Mechanismo Mk1 and DEATH!
+    published_at: 2020-03-12T20:49:16.0000000Z
+  index:
+    name: judge-dredd
+    description: Judge Dredd
+    battleScribeVersion: "2.03"
+    version: V1.6
+    lastUpdated: 2020-03-12T20:49:16.0000000Z
+    lastUpdateDescription: Citizens, Mechanismo Mk1 and DEATH!
+    indexUrl: https://github.com/BSData/judge-dredd/releases/latest/download/judge-dredd.latest.bsi
+    repositoryUrl: https://github.com/BSData/judge-dredd/releases/latest/download/judge-dredd.catpkg.json
+    githubUrl: https://github.com/BSData/judge-dredd
+    feedUrl: https://github.com/BSData/judge-dredd/releases.atom
+    bugTrackerUrl: https://github.com/BSData/judge-dredd/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/judge-dredd
 
