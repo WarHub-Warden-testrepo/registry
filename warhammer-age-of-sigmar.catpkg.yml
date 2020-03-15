@@ -2,18 +2,18 @@ location:
   github: BSData/warhammer-age-of-sigmar
 latest-release:
   api-response-headers:
-    Last-Modified: Wed, 11 Mar 2020 21:28:41 GMT
+    Last-Modified: Sun, 15 Mar 2020 19:21:46 GMT
   api-response-content:
-    tag_name: v2.1.27
-    name: 100th Release!
-    published_at: 2020-03-11T21:28:41.0000000Z
+    tag_name: v2.1.28
+    name: STEGAGEDDON!
+    published_at: 2020-03-15T19:21:46.0000000Z
   index:
     name: warhammer-age-of-sigmar
     description: 'Warhammer: Age of Sigmar'
     battleScribeVersion: "2.03"
-    version: v2.1.27
-    lastUpdated: 2020-03-11T21:28:41.0000000Z
-    lastUpdateDescription: 100th Release!
+    version: v2.1.28
+    lastUpdated: 2020-03-15T19:21:46.0000000Z
+    lastUpdateDescription: STEGAGEDDON!
     indexUrl: https://github.com/BSData/warhammer-age-of-sigmar/releases/latest/download/warhammer-age-of-sigmar.latest.bsi
     repositoryUrl: https://github.com/BSData/warhammer-age-of-sigmar/releases/latest/download/warhammer-age-of-sigmar.catpkg.json
     githubUrl: https://github.com/BSData/warhammer-age-of-sigmar
