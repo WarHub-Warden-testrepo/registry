@@ -1,7 +1,7 @@
 location:
   github: BSData/punkapocalyptic
 latest-release:
-  index-response-error:
-    code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
+  api-response-error:
+    code: 502
+    message: 'Response status code does not indicate success: 502 (Bad Gateway).'
 
