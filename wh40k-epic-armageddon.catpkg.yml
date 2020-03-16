@@ -2,6 +2,6 @@ location:
   github: BSData/wh40k-epic-armageddon
 latest-release:
   index-response-error:
-    code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
+    code: 504
+    message: 'Response status code does not indicate success: 504 (Gateway Time-out).'
 
