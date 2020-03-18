@@ -2,10 +2,10 @@ location:
   github: BSData/adeptus-titanicus
 latest-release:
   api-response-headers:
-    Last-Modified: Wed, 18 Mar 2020 02:55:33 GMT
+    Last-Modified: Wed, 18 Mar 2020 08:02:40 GMT
   api-response-content:
     tag_name: v4.2.0
-    name: Toggle Structure.
+    name: '[Trevelyan Release] Toggle Structure, Legio Specific Strategems, S&I Strategems'
     published_at: 2020-03-18T02:55:33.0000000Z
   index:
     name: adeptus-titanicus
@@ -13,7 +13,7 @@ latest-release:
     battleScribeVersion: "2.03"
     version: v4.2.0
     lastUpdated: 2020-03-18T02:55:33.0000000Z
-    lastUpdateDescription: Toggle Structure.
+    lastUpdateDescription: '[Trevelyan Release] Toggle Structure, Legio Specific Strategems, S&I Strategems'
     indexUrl: https://github.com/BSData/adeptus-titanicus/releases/latest/download/adeptus-titanicus.latest.bsi
     repositoryUrl: https://github.com/BSData/adeptus-titanicus/releases/latest/download/adeptus-titanicus.catpkg.json
     githubUrl: https://github.com/BSData/adeptus-titanicus
