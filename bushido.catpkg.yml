@@ -2,6 +2,6 @@ location:
   github: BSData/bushido
 latest-release:
   api-response-error:
-    code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
+    code: 500
+    message: 'Response status code does not indicate success: 500 (Internal Server Error).'
 
