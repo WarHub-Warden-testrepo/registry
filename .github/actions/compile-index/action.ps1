@@ -120,12 +120,12 @@ $settings = Get-Content $regSettingsPath -Raw | ConvertFrom-Yaml
 $registrationsPath = Join-Path $registryPath $settings.registrations.path
 
 # read registry entries
-$registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | ForEach-Object {
+$registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | Sort-Object Name | ForEach-Object {
   return @{
-    name         = $_.name
+    name         = $_.Name
     registryFile = $_
   }
-} | ConvertTo-HashTable -Key { $_.name }
+} | ConvertTo-HashTable -Key { $_.name } -Ordered
 # zip entries with existing index entries
 Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
   $entry = $registry[$_.Name]
@@ -137,7 +137,7 @@ Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
 }
 
 # process all entries
-$entries = $registry.Values | ForEach-Object {
+$entries = $registry.Values | Sort-Object name | ForEach-Object {
   Write-Host ("-> Processing: " + $_.name)
   if (-not $_.registryFile) {
     Write-Host "Index entry not in registry, removing."
