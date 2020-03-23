@@ -1,7 +1,7 @@
 location:
   github: BSData/cav-strike-operations
 latest-release:
-  api-response-error:
-    code: 500
-    message: 'Response status code does not indicate success: 500 (Internal Server Error).'
+  index-response-error:
+    code: 404
+    message: 'Response status code does not indicate success: 404 (Not Found).'
 
