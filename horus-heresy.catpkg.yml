@@ -2,18 +2,18 @@ location:
   github: BSData/horus-heresy
 latest-release:
   api-response-headers:
-    Last-Modified: Sat, 07 Mar 2020 10:55:59 GMT
+    Last-Modified: Tue, 24 Mar 2020 17:19:19 GMT
   api-response-content:
-    tag_name: "13.005"
-    name: Few LoW tweeks. Added Inner Circle Knights, Added the Grav weapon to the Bombard and other fixex
-    published_at: 2020-03-07T10:55:59.0000000Z
+    tag_name: v13.006
+    name: Nullificator, Arquitor, Sac Offer, Dreads and Guns
+    published_at: 2020-03-24T17:19:19.0000000Z
   index:
     name: horus-heresy
     description: Horus Heresy
     battleScribeVersion: "2.03"
-    version: "13.005"
-    lastUpdated: 2020-03-07T10:55:59.0000000Z
-    lastUpdateDescription: Few LoW tweeks. Added Inner Circle Knights, Added the Grav weapon to the Bombard and other fixex
+    version: v13.006
+    lastUpdated: 2020-03-24T17:19:19.0000000Z
+    lastUpdateDescription: Nullificator, Arquitor, Sac Offer, Dreads and Guns
     indexUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.latest.bsi
     repositoryUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.catpkg.json
     githubUrl: https://github.com/BSData/horus-heresy
