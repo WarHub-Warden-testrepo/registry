@@ -2,6 +2,6 @@ location:
   github: BSData/harry-potter
 latest-release:
   index-response-error:
-    code: 500
-    message: 'Response status code does not indicate success: 500 (internal server error).'
+    code: 404
+    message: 'Response status code does not indicate success: 404 (Not Found).'
 
