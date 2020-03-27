@@ -2,18 +2,18 @@ location:
   github: BSData/horus-heresy
 latest-release:
   api-response-headers:
-    Last-Modified: Tue, 24 Mar 2020 17:19:19 GMT
+    Last-Modified: Fri, 27 Mar 2020 11:47:45 GMT
   api-response-content:
-    tag_name: v13.006
-    name: Nullificator, Arquitor, Sac Offer, Dreads and Guns
-    published_at: 2020-03-24T17:19:19.0000000Z
+    tag_name: v13.007
+    name: Few LA fixes and a Tidy Up
+    published_at: 2020-03-27T11:47:45.0000000Z
   index:
     name: horus-heresy
     description: Horus Heresy
     battleScribeVersion: "2.03"
-    version: v13.006
-    lastUpdated: 2020-03-24T17:19:19.0000000Z
-    lastUpdateDescription: Nullificator, Arquitor, Sac Offer, Dreads and Guns
+    version: v13.007
+    lastUpdated: 2020-03-27T11:47:45.0000000Z
+    lastUpdateDescription: Few LA fixes and a Tidy Up
     indexUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.latest.bsi
     repositoryUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.catpkg.json
     githubUrl: https://github.com/BSData/horus-heresy
