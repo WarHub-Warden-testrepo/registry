@@ -2,18 +2,18 @@ location:
   github: BSData/judge-dredd
 latest-release:
   api-response-headers:
-    Last-Modified: Thu, 12 Mar 2020 20:49:16 GMT
+    Last-Modified: Thu, 26 Mar 2020 23:42:11 GMT
   api-response-content:
-    tag_name: V1.6
-    name: Citizens, Mechanismo Mk1 and DEATH!
-    published_at: 2020-03-12T20:49:16.0000000Z
+    tag_name: "1.7"
+    name: Characters and Catalogue name changes
+    published_at: 2020-03-26T23:42:11.0000000Z
   index:
     name: judge-dredd
     description: Judge Dredd
     battleScribeVersion: "2.03"
-    version: V1.6
-    lastUpdated: 2020-03-12T20:49:16.0000000Z
-    lastUpdateDescription: Citizens, Mechanismo Mk1 and DEATH!
+    version: "1.7"
+    lastUpdated: 2020-03-26T23:42:11.0000000Z
+    lastUpdateDescription: Characters and Catalogue name changes
     indexUrl: https://github.com/BSData/judge-dredd/releases/latest/download/judge-dredd.latest.bsi
     repositoryUrl: https://github.com/BSData/judge-dredd/releases/latest/download/judge-dredd.catpkg.json
     githubUrl: https://github.com/BSData/judge-dredd
