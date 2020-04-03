@@ -2,18 +2,18 @@ location:
   github: BSData/wh40k
 latest-release:
   api-response-headers:
-    Last-Modified: Tue, 24 Mar 2020 14:25:23 GMT
+    Last-Modified: Fri, 03 Apr 2020 13:35:02 GMT
   api-response-content:
-    tag_name: v1.4.13
-    name: Imperial Enhancements in the Pipe, Five by Five.
-    published_at: 2020-03-24T14:25:23.0000000Z
+    tag_name: v1.4.14
+    name: Da One Wif Da Krumpin an Da Choppin
+    published_at: 2020-04-03T13:35:02.0000000Z
   index:
     name: wh40k
     description: Warhammer 40,000
     battleScribeVersion: "2.03"
-    version: v1.4.13
-    lastUpdated: 2020-03-24T14:25:23.0000000Z
-    lastUpdateDescription: Imperial Enhancements in the Pipe, Five by Five.
+    version: v1.4.14
+    lastUpdated: 2020-04-03T13:35:02.0000000Z
+    lastUpdateDescription: Da One Wif Da Krumpin an Da Choppin
     indexUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.latest.bsi
     repositoryUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.catpkg.json
     githubUrl: https://github.com/BSData/wh40k
