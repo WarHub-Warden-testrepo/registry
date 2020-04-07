@@ -2,18 +2,18 @@ location:
   github: BSData/judge-dredd
 latest-release:
   api-response-headers:
-    Last-Modified: Thu, 26 Mar 2020 23:42:11 GMT
+    Last-Modified: Tue, 07 Apr 2020 13:26:39 GMT
   api-response-content:
-    tag_name: "1.7"
-    name: Characters and Catalogue name changes
-    published_at: 2020-03-26T23:42:11.0000000Z
+    tag_name: "1.8"
+    name: Full Characters added Category changes
+    published_at: 2020-04-07T13:26:39.0000000Z
   index:
     name: judge-dredd
     description: Judge Dredd
     battleScribeVersion: "2.03"
-    version: "1.7"
-    lastUpdated: 2020-03-26T23:42:11.0000000Z
-    lastUpdateDescription: Characters and Catalogue name changes
+    version: "1.8"
+    lastUpdated: 2020-04-07T13:26:39.0000000Z
+    lastUpdateDescription: Full Characters added Category changes
     indexUrl: https://github.com/BSData/judge-dredd/releases/latest/download/judge-dredd.latest.bsi
     repositoryUrl: https://github.com/BSData/judge-dredd/releases/latest/download/judge-dredd.catpkg.json
     githubUrl: https://github.com/BSData/judge-dredd
