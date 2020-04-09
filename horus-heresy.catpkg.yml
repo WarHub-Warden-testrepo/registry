@@ -2,18 +2,18 @@ location:
   github: BSData/horus-heresy
 latest-release:
   api-response-headers:
-    Last-Modified: Tue, 31 Mar 2020 11:28:16 GMT
+    Last-Modified: Thu, 09 Apr 2020 20:38:57 GMT
   api-response-content:
-    tag_name: v13.008
-    name: How bunch of LoW restriction fixes.
-    published_at: 2020-03-31T11:28:16.0000000Z
+    tag_name: v13.009
+    name: Futureproofing for new BS release
+    published_at: 2020-04-09T20:38:57.0000000Z
   index:
     name: horus-heresy
     description: Horus Heresy
     battleScribeVersion: "2.03"
-    version: v13.008
-    lastUpdated: 2020-03-31T11:28:16.0000000Z
-    lastUpdateDescription: How bunch of LoW restriction fixes.
+    version: v13.009
+    lastUpdated: 2020-04-09T20:38:57.0000000Z
+    lastUpdateDescription: Futureproofing for new BS release
     indexUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.latest.bsi
     repositoryUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.catpkg.json
     githubUrl: https://github.com/BSData/horus-heresy
