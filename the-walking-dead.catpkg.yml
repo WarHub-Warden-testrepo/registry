@@ -1,7 +1,23 @@
 location:
   github: BSData/the-walking-dead
 latest-release:
-  index-response-error:
-    code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
+  api-response-headers:
+    Last-Modified: Fri, 10 Apr 2020 17:44:42 GMT
+  api-response-content:
+    tag_name: "3.0"
+    name: Wave Six models and cards
+    published_at: 2020-04-10T17:44:42.0000000Z
+  index:
+    name: the-walking-dead
+    description: 'The Walking Dead: All Out War'
+    battleScribeVersion: "2.03"
+    version: "3.0"
+    lastUpdated: 2020-04-10T17:44:42.0000000Z
+    lastUpdateDescription: Wave Six models and cards
+    indexUrl: https://github.com/BSData/the-walking-dead/releases/latest/download/the-walking-dead.latest.bsi
+    repositoryUrl: https://github.com/BSData/the-walking-dead/releases/latest/download/the-walking-dead.catpkg.json
+    githubUrl: https://github.com/BSData/the-walking-dead
+    feedUrl: https://github.com/BSData/the-walking-dead/releases.atom
+    bugTrackerUrl: https://github.com/BSData/the-walking-dead/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/the-walking-dead
 
