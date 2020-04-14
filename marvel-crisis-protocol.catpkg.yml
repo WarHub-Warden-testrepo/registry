@@ -1,23 +1,7 @@
 location:
   github: BSData/marvel-crisis-protocol
 latest-release:
-  api-response-headers:
-    Last-Modified: Mon, 13 Apr 2020 18:12:08 GMT
-  api-response-content:
-    tag_name: "1.5"
-    name: Corvus Glaive & Proxima Midnight expansion was added
-    published_at: 2020-04-13T18:12:08.0000000Z
-  index:
-    name: marvel-crisis-protocol
-    description: Marvel Crisis Protocol
-    battleScribeVersion: "2.03"
-    version: "1.5"
-    lastUpdated: 2020-04-13T18:12:08.0000000Z
-    lastUpdateDescription: Corvus Glaive & Proxima Midnight expansion was added
-    indexUrl: https://github.com/BSData/marvel-crisis-protocol/releases/latest/download/marvel-crisis-protocol.latest.bsi
-    repositoryUrl: https://github.com/BSData/marvel-crisis-protocol/releases/latest/download/marvel-crisis-protocol.catpkg.json
-    githubUrl: https://github.com/BSData/marvel-crisis-protocol
-    feedUrl: https://github.com/BSData/marvel-crisis-protocol/releases.atom
-    bugTrackerUrl: https://github.com/BSData/marvel-crisis-protocol/issues
-    reportBugUrl: http://battlescribedata.appspot.com/#/repo/marvel-crisis-protocol
+  index-response-error:
+    code: 404
+    message: 'Response status code does not indicate success: 404 (Not Found).'
 
