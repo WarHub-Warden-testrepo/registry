@@ -2,18 +2,18 @@ location:
   github: BSData/horus-heresy
 latest-release:
   api-response-headers:
-    Last-Modified: Thu, 09 Apr 2020 20:38:57 GMT
+    Last-Modified: Tue, 14 Apr 2020 17:12:44 GMT
   api-response-content:
-    tag_name: v13.009
-    name: Futureproofing for new BS release
-    published_at: 2020-04-09T20:38:57.0000000Z
+    tag_name: v13.010
+    name: Fixes + Mournival start
+    published_at: 2020-04-14T17:12:44.0000000Z
   index:
     name: horus-heresy
     description: Horus Heresy
     battleScribeVersion: "2.03"
-    version: v13.009
-    lastUpdated: 2020-04-09T20:38:57.0000000Z
-    lastUpdateDescription: Futureproofing for new BS release
+    version: v13.010
+    lastUpdated: 2020-04-14T17:12:44.0000000Z
+    lastUpdateDescription: Fixes + Mournival start
     indexUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.latest.bsi
     repositoryUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.catpkg.json
     githubUrl: https://github.com/BSData/horus-heresy
