@@ -70,7 +70,11 @@ function Get-LatestReleaseInfo {
         Write-Host "Retrying request in $retryInterval sec"
         Start-Sleep -Seconds $retryInterval
       }
-      $latestRelease = Invoke-RestMethod @latestParams
+      $time = Measure-Command {
+        $latestRelease = Invoke-RestMethod @latestParams
+        $latestRelease | Out-Null # to avoid PSUseDeclaredVarsMoreThanAssignments, Justification: scriptblock is executed in current scope
+      }
+      Write-Verbose ("Request finished in {0:c}" -f $time)
     } while (++$attempts -le 3 -and $latestReleaseStatusCode -notin @(200, 304))
   }
   catch {
@@ -124,7 +128,11 @@ function Get-LatestReleaseInfo {
     Verbose            = $true
   }
   try {
-    $catpkgJson = Invoke-RestMethod @getIndexParams -RetryIntervalSec -MaximumRetryCount
+    $time = Measure-Command {
+      $catpkgJson = Invoke-RestMethod @getIndexParams
+      $catpkgJson | Out-Null # to avoid PSUseDeclaredVarsMoreThanAssignments, Justification: scriptblock is executed in current scope
+    }
+    Write-Verbose ("Request finished in {0:c}" -f $time)
   }
   catch {
     # exception during request
