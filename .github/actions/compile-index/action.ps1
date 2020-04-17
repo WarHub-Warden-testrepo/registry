@@ -1,10 +1,12 @@
 #!/usr/bin/env pwsh
 
 $ErrorActionPreference = 'Stop'
-$VerbosePreference = 'Continue'
 
 Import-Module $PSScriptRoot/lib/GitHubActionsCore
 Import-Module $PSScriptRoot/lib/powershell-yaml
+
+# set this after above imports so the imports aren't verbose
+$VerbosePreference = 'Continue'
 
 # function to build hashtable from pipeline, selecting string keys for objects
 function ConvertTo-HashTable {
@@ -80,7 +82,7 @@ function Get-LatestReleaseInfo {
   }
   catch {
     # exception during request
-    Write-Error -Exception $_.Exception -ErrorAction:Continue
+    Write-Error -Exception $_.Exception -ErrorAction:Continue -
     return [ordered]@{
       'api-response-error' = [ordered]@{
         'exception' = $_.Exception.Message
@@ -103,7 +105,7 @@ function Get-LatestReleaseInfo {
     }
   }
   # status code 200 OK
-  Write-Verbose "Update found: $Repository"
+  Write-Verbose "Latest release changed: $Repository"
   # prepare result object with release data: headers and content
   $resultHeaders = [ordered]@{ }
   if ($releaseResponseHeaders.'Last-Modified') {
