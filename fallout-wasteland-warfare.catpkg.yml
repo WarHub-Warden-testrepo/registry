@@ -2,18 +2,18 @@ location:
   github: BSData/fallout-wasteland-warfare
 latest-release:
   api-response-headers:
-    Last-Modified: Sun, 12 Apr 2020 13:52:30 GMT
+    Last-Modified: Fri, 17 Apr 2020 13:19:02 GMT
   api-response-content:
-    tag_name: v1.3.1
-    name: Optimization
-    published_at: 2020-04-12T13:52:30.0000000Z
+    tag_name: v1.3.2
+    name: More optimizations
+    published_at: 2020-04-17T13:19:02.0000000Z
   index:
     name: fallout-wasteland-warfare
     description: 'Fallout: Wasteland Warfare'
     battleScribeVersion: "2.03"
-    version: v1.3.1
-    lastUpdated: 2020-04-12T13:52:30.0000000Z
-    lastUpdateDescription: Optimization
+    version: v1.3.2
+    lastUpdated: 2020-04-17T13:19:02.0000000Z
+    lastUpdateDescription: More optimizations
     indexUrl: https://github.com/BSData/fallout-wasteland-warfare/releases/latest/download/fallout-wasteland-warfare.latest.bsi
     repositoryUrl: https://github.com/BSData/fallout-wasteland-warfare/releases/latest/download/fallout-wasteland-warfare.catpkg.json
     githubUrl: https://github.com/BSData/fallout-wasteland-warfare
