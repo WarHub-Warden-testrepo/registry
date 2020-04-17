@@ -1,6 +1,7 @@
 #!/usr/bin/env pwsh
 
 $ErrorActionPreference = 'Stop'
+$VerbosePreference = 'Continue'
 
 Import-Module $PSScriptRoot/lib/GitHubActionsCore
 Import-Module $PSScriptRoot/lib/powershell-yaml
@@ -67,7 +68,7 @@ function Get-LatestReleaseInfo {
     $retryInterval = 5
     do {
       if ($attempts -gt 0) {
-        Write-Host "Retrying request in $retryInterval sec"
+        Write-Verbose "Retrying request in $retryInterval sec"
         Start-Sleep -Seconds $retryInterval
       }
       $time = Measure-Command {
@@ -88,7 +89,7 @@ function Get-LatestReleaseInfo {
   }
   if ($latestReleaseStatusCode -eq [System.Net.HttpStatusCode]::NotModified) {
     # not modified
-    Write-Host "Up to date: $Repository"
+    Write-Verbose "Up to date: $Repository"
     return $SavedRelease
   }
   if ($latestReleaseStatusCode -ne [System.Net.HttpStatusCode]::OK) {
@@ -102,7 +103,7 @@ function Get-LatestReleaseInfo {
     }
   }
   # status code 200 OK
-  Write-Host "Update found: $Repository"
+  Write-Verbose "Update found: $Repository"
   # prepare result object with release data: headers and content
   $resultHeaders = [ordered]@{ }
   if ($releaseResponseHeaders.'Last-Modified') {
@@ -188,38 +189,38 @@ Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
 $entries = $registry.Values | Sort-Object name | ForEach-Object {
   Write-Host ("-> Processing: " + $_.name)
   if (-not $_.registryFile) {
-    Write-Host "Index entry not in registry, removing."
+    Write-Verbose "Index entry not in registry, removing."
     Remove-Item $_.indexFile
     return
   }
   $registration = $_.registryFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
   if ($_.indexFile) {
-    Write-Host "Reading index entry."
+    Write-Verbose "Reading index entry."
     $index = $_.indexFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
     # compare registry and index, if location differs, use registration thus forcing refresh
     $index = if ($index.location.github -ne $registration.location.github) { $registration } else { $index }
   }
   else {
-    Write-Host "Reading registry entry."
+    Write-Verbose "Reading registry entry."
     $index = $registration
   }
   $repository = $index.location.github
   $owner, $repoName = $repository -split '/'
-  Write-Host "Getting latest release info."
+  Write-Verbose "Getting latest release info."
   $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
   if ($latestRelease -ne $index.'latest-release') {
-    Write-Host "Saving latest release info."
+    Write-Verbose "Saving latest release info."
     $index.'latest-release' = $latestRelease
     $indexYmlPath = (Join-Path $indexPath $_.name)
     $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
-    Write-Host "Saved."
+    Write-Host "Entry updated." -ForegroundColor Cyan
   }
   return $index
 }
 
 $galleryJsonPath = Get-ActionInput gallery-json-path
 if (-not $galleryJsonPath) {
-  Write-Host "Done"
+  Write-Host "Done, gallery json creation skipped (no path)." -ForegroundColor Green
   exit 0
 }
 
