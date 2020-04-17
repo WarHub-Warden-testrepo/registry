@@ -1,7 +1,12 @@
 location:
   github: BSData/marvel-crisis-protocol
 latest-release:
+  api-response-headers:
+    Last-Modified: Mon, 13 Apr 2020 23:50:30 GMT
+  api-response-content:
+    tag_name: 1.5.1
+    name: Corvus Glaive & Proxima Midnight expansion added
+    published_at: 2020-04-13T23:50:30.0000000Z
   index-response-error:
     code: 404
-    message: 'Response status code does not indicate success: 404 (Not Found).'
 
