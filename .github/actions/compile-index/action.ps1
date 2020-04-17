@@ -55,58 +55,82 @@ function Get-LatestReleaseInfo {
   $latestParams = @{
     Uri                     = "https://api.github.com/repos/$Repository/releases/latest"
     Headers                 = $requestHeaders
-    ResponseHeadersVariable = 'responseHeaders'
+    ResponseHeadersVariable = 'releaseResponseHeaders'
+    StatusCodeVariable      = 'latestReleaseStatusCode'
+    SkipHttpErrorCheck      = $true
   }
   try {
     $latestRelease = Invoke-RestMethod @latestParams
   }
-  catch [Microsoft.PowerShell.Commands.HttpResponseException] {
-    if ($_.Exception.Response.StatusCode -eq 304) {
-      # not modified
-      Write-Host "Up to date: $Repository"
-      return $SavedRelease
-    }
-    # error received
+  catch {
+    # exception during request
     Write-Error -Exception $_.Exception -ErrorAction:Continue
     return [ordered]@{
       'api-response-error' = [ordered]@{
-        'code' = $_.Exception.Response.StatusCode -as [int]
-        'message' = $_.Exception.Message
+        'exception' = $_.Exception.Message
       }
     }
   }
-  Write-Host "Update found: $Repository"
-  # get content of the new catpkg
-  try {
-    $indexJson = Invoke-RestMethod "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
+  if ($latestReleaseStatusCode -eq 304) {
+    # not modified
+    Write-Host "Up to date: $Repository"
+    return $SavedRelease
   }
-  catch [Microsoft.PowerShell.Commands.HttpResponseException] {
+  if ($latestReleaseStatusCode -ne 200) {
     # error received
-    Write-Error -Exception $_.Exception -ErrorAction:Continue
+    Write-Error "Latest release request failed with HTTP $([int]$latestReleaseStatusCode) $latestReleaseStatusCode" -ErrorAction:Continue
+    $latestRelease | ConvertTo-Json | Write-Error -ErrorAction:Continue
     return [ordered]@{
-      'index-response-error' = [ordered]@{
-        'code' = $_.Exception.Response.StatusCode -as [int]
-        'message' = $_.Exception.Message
+      'api-response-error' = [ordered]@{
+        'code' = $latestReleaseStatusCode -as [int]
       }
     }
   }
-  $headers = [ordered]@{}
-  # if ($responseHeaders.ETag) {
-  #   $headers.'ETag' = $responseHeaders.ETag -as [string]
+  # status code 200 OK
+  Write-Host "Update found: $Repository"
+  # prepare result object with release data: headers and content
+  $resultHeaders = [ordered]@{ }
+  if ($releaseResponseHeaders.'Last-Modified') {
+    $resultHeaders.'Last-Modified' = $releaseResponseHeaders.'Last-Modified' -as [string]
+  }
+  # if ($releaseResponseHeaders.ETag) {
+  #   $resultHeaders.'ETag' = $releaseResponseHeaders.ETag -as [string]
   # }
-  if ($responseHeaders.'Last-Modified') {
-    $headers.'Last-Modified' = $responseHeaders.'Last-Modified' -as [string]
+  $result = [ordered]@{ }
+  if ($resultHeaders.Count -gt 0) {
+    $result['api-response-headers'] = $resultHeaders
   }
-  $NewRelease = [ordered]@{
-    'api-response-headers' = $headers
-    'api-response-content' = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
+  $result['api-response-content'] = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
+  # get content of the new catpkg.json
+  $getIndexParams = @{
+    Uri                = "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
+    StatusCodeVariable = 'catpkgStatusCode'
+    SkipHttpErrorCheck = $true
+  }
+  try {
+    $catpkgJson = Invoke-RestMethod @getIndexParams
+  }
+  catch {
+    # exception during request
+    Write-Error -Exception $_.Exception -ErrorAction:Continue
+    $result['index-response-error'] = [ordered]@{
+      'exception' = $_.Exception.Message
+    }
+    return $result
+  }
+  if ($catpkgStatusCode -eq 200) {
     # currently needed because of a couple of fields like battleScribeVersion:
-    'index'                = $indexJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
+    $result['index'] = $catpkgJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
   }
-  if ($headers.Count -eq 0) {
-    $NewRelease.Remove('api-response-headers') | Out-Null
+  else {
+    # error received
+    Write-Error "catpkg.json request failed with HTTP $([int]$catpkgStatusCode) $catpkgStatusCode" -ErrorAction:Continue
+    $catpkgJson | ConvertTo-Json | Write-Error -ErrorAction:Continue
+    $result['index-response-error'] = [ordered]@{
+      'code' = $catpkgStatusCode -as [int]
+    }
   }
-  return $NewRelease
+  return $result
 }
 
 # read inputs
@@ -176,11 +200,11 @@ if (-not $galleryJsonPath) {
 }
 
 $entriesWithRelease = $entries | Where-Object { $null -ne $_.'latest-release' -and $null -ne $_.'latest-release'.index }
-$entryIndexes =  @($entriesWithRelease.'latest-release'.index)
+$entryIndexes = @($entriesWithRelease.'latest-release'.index)
 $galleryJsonContent = [ordered]@{
-  '$schema' = 'https://raw.githubusercontent.com/BSData/schemas/master/src/catpkg.schema.json'
-  name = $settings.gallery.name
-  description = $settings.gallery.description
+  '$schema'           = 'https://raw.githubusercontent.com/BSData/schemas/master/src/catpkg.schema.json'
+  name                = $settings.gallery.name
+  description         = $settings.gallery.description
   battleScribeVersion = ($entryIndexes.battleScribeVersion | Sort-Object -Bottom 1) -as [string]
 } + $settings.gallery.urls + @{
   repositories = $entryIndexes
