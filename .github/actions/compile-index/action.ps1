@@ -82,7 +82,7 @@ function Get-LatestReleaseInfo {
   }
   catch {
     # exception during request
-    Write-Error -Exception $_.Exception -ErrorAction:Continue -
+    Write-Error -Exception $_.Exception
     return [ordered]@{
       'api-response-error' = [ordered]@{
         'exception' = $_.Exception.Message
@@ -96,8 +96,8 @@ function Get-LatestReleaseInfo {
   }
   if ($latestReleaseStatusCode -ne [System.Net.HttpStatusCode]::OK) {
     # error received
-    Write-Error "Latest release request failed with HTTP $([int]$latestReleaseStatusCode) $($latestReleaseStatusCode -as [System.Net.HttpStatusCode])" -ErrorAction:Continue
-    $latestRelease | ConvertTo-Json | Write-Error -ErrorAction:Continue
+    Write-Warning "Latest release request failed with HTTP $([int]$latestReleaseStatusCode) $($latestReleaseStatusCode -as [System.Net.HttpStatusCode])"
+    $latestRelease | ConvertTo-Json | Write-Warning
     return [ordered]@{
       'api-response-error' = [ordered]@{
         'code' = $latestReleaseStatusCode -as [int]
@@ -139,7 +139,7 @@ function Get-LatestReleaseInfo {
   }
   catch {
     # exception during request
-    Write-Error -Exception $_.Exception -ErrorAction:Continue
+    Write-Error -Exception $_.Exception
     $result['index-response-error'] = [ordered]@{
       'exception' = $_.Exception.Message
     }
@@ -151,8 +151,8 @@ function Get-LatestReleaseInfo {
   }
   else {
     # error received
-    Write-Error "catpkg.json request failed with HTTP $([int]$catpkgStatusCode) $($catpkgStatusCode -as [System.Net.HttpStatusCode])" -ErrorAction:Continue
-    $catpkgJson | ConvertTo-Json | Write-Error -ErrorAction:Continue
+    Write-Warning "catpkg.json request failed with HTTP $([int]$catpkgStatusCode) $($catpkgStatusCode -as [System.Net.HttpStatusCode])"
+    $catpkgJson | ConvertTo-Json | Write-Warning
     $result['index-response-error'] = [ordered]@{
       'code' = $catpkgStatusCode -as [int]
     }
@@ -209,7 +209,7 @@ $entries = $registry.Values | Sort-Object name | ForEach-Object {
   $repository = $index.location.github
   $owner, $repoName = $repository -split '/'
   Write-Verbose "Getting latest release info."
-  $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token
+  $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token -ErrorAction:Continue
   if ($latestRelease -ne $index.'latest-release') {
     Write-Verbose "Saving latest release info."
     $index.'latest-release' = $latestRelease
