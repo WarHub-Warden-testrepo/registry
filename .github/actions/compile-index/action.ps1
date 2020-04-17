@@ -52,15 +52,26 @@ function Get-LatestReleaseInfo {
   # if ($savedHeaders.'ETag') {
   #   $requestHeaders['If-None-Match'] = $savedHeaders.'ETag'
   # }
+  # get latest release object from API, but only if newer than what we've got already
   $latestParams = @{
     Uri                     = "https://api.github.com/repos/$Repository/releases/latest"
     Headers                 = $requestHeaders
     ResponseHeadersVariable = 'releaseResponseHeaders'
     StatusCodeVariable      = 'latestReleaseStatusCode'
     SkipHttpErrorCheck      = $true
+    Verbose                 = $true
   }
   try {
-    $latestRelease = Invoke-RestMethod @latestParams
+    # we have to employ custom retry logic because Invoke-RestMethod retries HTTP 304 NotModified
+    $attempts = 0
+    $retryInterval = 5
+    do {
+      if ($attempts -gt 0) {
+        Write-Host "Retrying request in $retryInterval sec"
+        Start-Sleep -Seconds $retryInterval
+      }
+      $latestRelease = Invoke-RestMethod @latestParams
+    } while (++$attempts -le 3 -and $latestReleaseStatusCode -notin @(200, 304))
   }
   catch {
     # exception during request
@@ -71,14 +82,14 @@ function Get-LatestReleaseInfo {
       }
     }
   }
-  if ($latestReleaseStatusCode -eq 304) {
+  if ($latestReleaseStatusCode -eq [System.Net.HttpStatusCode]::NotModified) {
     # not modified
     Write-Host "Up to date: $Repository"
     return $SavedRelease
   }
-  if ($latestReleaseStatusCode -ne 200) {
+  if ($latestReleaseStatusCode -ne [System.Net.HttpStatusCode]::OK) {
     # error received
-    Write-Error "Latest release request failed with HTTP $([int]$latestReleaseStatusCode) $latestReleaseStatusCode" -ErrorAction:Continue
+    Write-Error "Latest release request failed with HTTP $([int]$latestReleaseStatusCode) $($latestReleaseStatusCode -as [System.Net.HttpStatusCode])" -ErrorAction:Continue
     $latestRelease | ConvertTo-Json | Write-Error -ErrorAction:Continue
     return [ordered]@{
       'api-response-error' = [ordered]@{
@@ -106,9 +117,14 @@ function Get-LatestReleaseInfo {
     Uri                = "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
     StatusCodeVariable = 'catpkgStatusCode'
     SkipHttpErrorCheck = $true
+    # retry 4 times (5 attempts) every 15 seconds. This is mostly so that when a new release
+    # is created, the publish-catpkg action will take approx. 1 minute until assets are uploaded.
+    RetryIntervalSec   = 15
+    MaximumRetryCount  = 4
+    Verbose            = $true
   }
   try {
-    $catpkgJson = Invoke-RestMethod @getIndexParams
+    $catpkgJson = Invoke-RestMethod @getIndexParams -RetryIntervalSec -MaximumRetryCount
   }
   catch {
     # exception during request
@@ -118,13 +134,13 @@ function Get-LatestReleaseInfo {
     }
     return $result
   }
-  if ($catpkgStatusCode -eq 200) {
+  if ($catpkgStatusCode -eq [System.Net.HttpStatusCode]::OK) {
     # currently needed because of a couple of fields like battleScribeVersion:
     $result['index'] = $catpkgJson | Select-Object * -ExcludeProperty '$schema', 'repositoryFiles'
   }
   else {
     # error received
-    Write-Error "catpkg.json request failed with HTTP $([int]$catpkgStatusCode) $catpkgStatusCode" -ErrorAction:Continue
+    Write-Error "catpkg.json request failed with HTTP $([int]$catpkgStatusCode) $($catpkgStatusCode -as [System.Net.HttpStatusCode])" -ErrorAction:Continue
     $catpkgJson | ConvertTo-Json | Write-Error -ErrorAction:Continue
     $result['index-response-error'] = [ordered]@{
       'code' = $catpkgStatusCode -as [int]
