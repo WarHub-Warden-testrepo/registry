@@ -2,22 +2,11 @@ location:
   github: BSData/wh40k-epic-armageddon
 latest-release:
   api-response-headers:
-    Last-Modified: Wed, 18 Mar 2020 20:07:11 GMT
+    Last-Modified: Sun, 19 Apr 2020 17:04:52 GMT
   api-response-content:
-    tag_name: "33.02"
-    name: update for EpicAU HH Dark Angels
-    published_at: 2020-03-18T20:07:11.0000000Z
-  index:
-    name: wh40k-epic-armageddon
-    description: Warhammer 40,000 Epic Armageddon
-    battleScribeVersion: "2.03"
-    version: "33.02"
-    lastUpdated: 2020-03-18T20:07:11.0000000Z
-    lastUpdateDescription: update for EpicAU HH Dark Angels
-    indexUrl: https://github.com/BSData/wh40k-epic-armageddon/releases/latest/download/wh40k-epic-armageddon.latest.bsi
-    repositoryUrl: https://github.com/BSData/wh40k-epic-armageddon/releases/latest/download/wh40k-epic-armageddon.catpkg.json
-    githubUrl: https://github.com/BSData/wh40k-epic-armageddon
-    feedUrl: https://github.com/BSData/wh40k-epic-armageddon/releases.atom
-    bugTrackerUrl: https://github.com/BSData/wh40k-epic-armageddon/issues
-    reportBugUrl: http://battlescribedata.appspot.com/#/repo/wh40k-epic-armageddon
+    tag_name: "33.03"
+    name: Konig Tank Regiment update
+    published_at: 2020-04-19T17:04:52.0000000Z
+  index-response-error:
+    code: 404
 
