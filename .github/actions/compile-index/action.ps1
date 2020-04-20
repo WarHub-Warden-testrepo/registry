@@ -31,6 +31,23 @@ function ConvertTo-HashTable {
   }
 }
 
+# this function returns an escaped name that will be accepted as github release asset name
+# NOTE keep in sync with https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+#      and https://github.com/BSData/publish-catpkg/blob/05e00b9215c65be226ff24346c31acab4fa037c7/action.ps1#L59-L72
+function Get-EscapedAssetName {
+    param (
+        [Parameter(Mandatory, Position = 0)]
+        [string] $Name
+    )
+    # according to https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+    # GitHub renames asset filenames that have special characters, non-alphanumeric characters, and leading or trailing periods.
+    # Let's do that ourselves first so we know exact filename before upload.
+    # 1. replace any group of non a-z, digit, hyphen or underscore chars with a single period
+    $periodsOnly = $Name -creplace '[^a-zA-Z0-9\-_]+', '.'
+    # 2. remove any leading or trailing period
+    return $periodsOnly.Trim('.')
+}
+
 # get latest release info as a ready-to-save hashtable
 function Get-LatestReleaseInfo {
   [CmdletBinding()]
@@ -78,7 +95,8 @@ function Get-LatestReleaseInfo {
         $latestRelease | Out-Null # to avoid PSUseDeclaredVarsMoreThanAssignments, Justification: scriptblock is executed in current scope
       }
       Write-Verbose ("Request finished in {0:c}" -f $time)
-    } while (++$attempts -le 3 -and $latestReleaseStatusCode -notin @(200, 304))
+      # repeat until 3rd attempt or success (200 or 304 is success)
+    } while (++$attempts -lt 3 -and $latestReleaseStatusCode -notin @(200, 304))
   }
   catch {
     # exception during request
@@ -120,14 +138,15 @@ function Get-LatestReleaseInfo {
   }
   $result['api-response-content'] = $latestRelease | Select-Object 'tag_name', 'name', 'published_at'
   # get content of the new catpkg.json
+  $assetName = Get-EscapedAssetName "$repoName.catpkg.json"
   $getIndexParams = @{
-    Uri                = "https://github.com/$Repository/releases/latest/download/$repoName.catpkg.json"
+    Uri                = "https://github.com/$Repository/releases/latest/download/$assetName"
     StatusCodeVariable = 'catpkgStatusCode'
     SkipHttpErrorCheck = $true
-    # retry 4 times (5 attempts) every 15 seconds. This is mostly so that when a new release
+    # retry 3 times (4 attempts) every 15 seconds. This is mostly so that when a new release
     # is created, the publish-catpkg action will take approx. 1 minute until assets are uploaded.
     RetryIntervalSec   = 15
-    MaximumRetryCount  = 4
+    MaximumRetryCount  = 3
     Verbose            = $true
   }
   try {
