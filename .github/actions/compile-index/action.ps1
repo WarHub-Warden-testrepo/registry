@@ -237,4 +237,4 @@ $galleryJsonContent = [ordered]@{
   repositories = $entryIndexes
 }
 
-$galleryJsonContent | ConvertTo-Json | Set-Content $galleryJsonPath -Force
+$galleryJsonContent | ConvertTo-Json -Compress -Depth 4 -EscapeHandling EscapeNonAscii | Set-Content $galleryJsonPath -Force
