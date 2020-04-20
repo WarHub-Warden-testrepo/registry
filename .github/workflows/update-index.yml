@@ -1,7 +1,7 @@
 name: Update index
 on:
   schedule:
-    - cron: '0 * * * *' # every day at 12:00 UTC
+    - cron: '0 * * * *' # every hour
   push:
     branches:
       - master
@@ -33,6 +33,13 @@ jobs:
           index-path: ./index
           registry-path: ./master/registry
           gallery-json-path: ${{ env.GALLERY_JSON }}
+      - name: Upload gallery-json as workflow artifact
+        if: success() || failure()
+        uses: actions/upload-artifact@v1
+        with:
+          name: 'bsdata.catpkg-gallery.json'
+          path: ${{ env.GALLERY_JSON }}
+        continue-on-error: true
       - name: Commit and push any index changes
         id: push
         shell: pwsh
@@ -60,6 +67,7 @@ jobs:
           git commit -F ../commit.txt
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           git push
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Write-Host "::set-output name=pushed::true"
       - name: Get release upload_url (and delete old asset if found)
         uses: actions/github-script@0.4.0
