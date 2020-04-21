@@ -35,17 +35,17 @@ function ConvertTo-HashTable {
 # NOTE keep in sync with https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 #      and https://github.com/BSData/publish-catpkg/blob/05e00b9215c65be226ff24346c31acab4fa037c7/action.ps1#L59-L72
 function Get-EscapedAssetName {
-    param (
-        [Parameter(Mandatory, Position = 0)]
-        [string] $Name
-    )
-    # according to https://developer.github.com/v3/repos/releases/#upload-a-release-asset
-    # GitHub renames asset filenames that have special characters, non-alphanumeric characters, and leading or trailing periods.
-    # Let's do that ourselves first so we know exact filename before upload.
-    # 1. replace any group of non a-z, digit, hyphen or underscore chars with a single period
-    $periodsOnly = $Name -creplace '[^a-zA-Z0-9\-_]+', '.'
-    # 2. remove any leading or trailing period
-    return $periodsOnly.Trim('.')
+  param (
+    [Parameter(Mandatory, Position = 0)]
+    [string] $Name
+  )
+  # according to https://developer.github.com/v3/repos/releases/#upload-a-release-asset
+  # GitHub renames asset filenames that have special characters, non-alphanumeric characters, and leading or trailing periods.
+  # Let's do that ourselves first so we know exact filename before upload.
+  # 1. replace any group of non a-z, digit, hyphen or underscore chars with a single period
+  $periodsOnly = $Name -creplace '[^a-zA-Z0-9\-_]+', '.'
+  # 2. remove any leading or trailing period
+  return $periodsOnly.Trim('.')
 }
 
 # get latest release info as a ready-to-save hashtable
@@ -179,6 +179,70 @@ function Get-LatestReleaseInfo {
   return $result
 }
 
+function Update-RegistryIndex {
+  [CmdletBinding()]
+  param (
+    # Path to registry entries directory (registrations)
+    [Parameter(Mandatory)]
+    [string]
+    $RegistrationsPath,
+    # Path to index entries directory
+    [Parameter(Mandatory)]
+    [string]
+    $IndexPath
+  )
+  
+  # read registry entries
+  $registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | Sort-Object Name | ForEach-Object {
+    return @{
+      name         = $_.Name
+      registryFile = $_
+    }
+  } | ConvertTo-HashTable -Key { $_.name } -Ordered
+  # zip entries with existing index entries
+  Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
+    $entry = $registry[$_.Name]
+    if ($null -eq $entry) {
+      $entry = @{ name = $_.Name }
+      $registry[$_.Name] = $entry
+    }
+    $entry.indexFile = $_
+  }
+
+  # process all entries
+  return $registry.Values | Sort-Object name | ForEach-Object {
+    Write-Host ("-> Processing: " + $_.name)
+    if (-not $_.registryFile) {
+      Write-Verbose "Index entry not in registry, removing."
+      Remove-Item $_.indexFile
+      return
+    }
+    $registration = $_.registryFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
+    if ($_.indexFile) {
+      Write-Verbose "Reading index entry."
+      $index = $_.indexFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
+      # compare registry and index, if location differs, use registration thus forcing refresh
+      $index = if ($index.location.github -ne $registration.location.github) { $registration } else { $index }
+    }
+    else {
+      Write-Verbose "Reading registry entry."
+      $index = $registration
+    }
+    $repository = $index.location.github
+    $owner, $repoName = $repository -split '/'
+    Write-Verbose "Getting latest release info."
+    $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token -ErrorAction:Continue
+    if ($latestRelease -ne $index.'latest-release') {
+      Write-Verbose "Saving latest release info."
+      $index.'latest-release' = $latestRelease
+      $indexYmlPath = (Join-Path $indexPath $_.name)
+      $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
+      Write-Host "Entry updated." -ForegroundColor Cyan
+    }
+    return $index
+  }
+}
+
 # read inputs
 $registryPath = Get-ActionInput 'registry-path'
 $indexPath = Get-ActionInput 'index-path'
@@ -189,57 +253,9 @@ $token = Get-ActionInput 'token'
 $settings = Get-Content $regSettingsPath -Raw | ConvertFrom-Yaml
 $registrationsPath = Join-Path $registryPath $settings.registrations.path
 
-# read registry entries
-$registry = Get-ChildItem $registrationsPath -Filter *.catpkg.yml | Sort-Object Name | ForEach-Object {
-  return @{
-    name         = $_.Name
-    registryFile = $_
-  }
-} | ConvertTo-HashTable -Key { $_.name } -Ordered
-# zip entries with existing index entries
-Get-ChildItem $indexPath *.catpkg.yml | ForEach-Object {
-  $entry = $registry[$_.Name]
-  if ($null -eq $entry) {
-    $entry = @{ name = $_.Name }
-    $registry[$_.Name] = $entry
-  }
-  $entry.indexFile = $_
-}
+$entries = Update-RegistryIndex -RegistrationsPath $registrationsPath -IndexPath $indexPath
 
-# process all entries
-$entries = $registry.Values | Sort-Object name | ForEach-Object {
-  Write-Host ("-> Processing: " + $_.name)
-  if (-not $_.registryFile) {
-    Write-Verbose "Index entry not in registry, removing."
-    Remove-Item $_.indexFile
-    return
-  }
-  $registration = $_.registryFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
-  if ($_.indexFile) {
-    Write-Verbose "Reading index entry."
-    $index = $_.indexFile | Get-Content -Raw | ConvertFrom-Yaml -Ordered
-    # compare registry and index, if location differs, use registration thus forcing refresh
-    $index = if ($index.location.github -ne $registration.location.github) { $registration } else { $index }
-  }
-  else {
-    Write-Verbose "Reading registry entry."
-    $index = $registration
-  }
-  $repository = $index.location.github
-  $owner, $repoName = $repository -split '/'
-  Write-Verbose "Getting latest release info."
-  $latestRelease = Get-LatestReleaseInfo $repository -SavedRelease $index.'latest-release' -Token $token -ErrorAction:Continue
-  if ($latestRelease -ne $index.'latest-release') {
-    Write-Verbose "Saving latest release info."
-    $index.'latest-release' = $latestRelease
-    $indexYmlPath = (Join-Path $indexPath $_.name)
-    $index | ConvertTo-Yaml | Set-Content $indexYmlPath -Force
-    Write-Host "Entry updated." -ForegroundColor Cyan
-  }
-  return $index
-}
-
-$galleryJsonPath = Get-ActionInput gallery-json-path
+$galleryJsonPath = Get-ActionInput 'gallery-json-path'
 if (-not $galleryJsonPath) {
   Write-Host "Done, gallery json creation skipped (no path)." -ForegroundColor Green
   exit 0
