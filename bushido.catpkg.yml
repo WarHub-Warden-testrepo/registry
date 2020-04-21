@@ -1,6 +1,23 @@
 location:
   github: BSData/bushido
 latest-release:
-  api-response-error:
-    code: 404
+  api-response-headers:
+    Last-Modified: Tue, 21 Apr 2020 20:04:46 GMT
+  api-response-content:
+    tag_name: v1.0.0
+    name: Year of the Risen Sun
+    published_at: 2020-04-21T20:04:46.0000000Z
+  index:
+    name: bushido
+    description: Bushido
+    battleScribeVersion: "2.03"
+    version: v1.0.0
+    lastUpdated: 2020-04-21T20:04:46.0000000Z
+    lastUpdateDescription: Year of the Risen Sun
+    indexUrl: https://github.com/BSData/bushido/releases/latest/download/bushido.latest.bsi
+    repositoryUrl: https://github.com/BSData/bushido/releases/latest/download/bushido.catpkg.json
+    githubUrl: https://github.com/BSData/bushido
+    feedUrl: https://github.com/BSData/bushido/releases.atom
+    bugTrackerUrl: https://github.com/BSData/bushido/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/bushido
 
