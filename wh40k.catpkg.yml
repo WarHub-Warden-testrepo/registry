@@ -2,18 +2,18 @@ location:
   github: BSData/wh40k
 latest-release:
   api-response-headers:
-    Last-Modified: Wed, 15 Apr 2020 11:38:13 GMT
+    Last-Modified: Thu, 23 Apr 2020 12:19:21 GMT
   api-response-content:
-    tag_name: v1.4.17
-    name: Thunderwolves, Fixed!
-    published_at: 2020-04-15T11:38:13.0000000Z
+    tag_name: v1.4.18
+    name: It's been a week. Here's some fixed things.
+    published_at: 2020-04-23T12:19:21.0000000Z
   index:
     name: wh40k
     description: Warhammer 40,000
     battleScribeVersion: "2.03"
-    version: v1.4.17
-    lastUpdated: 2020-04-15T11:38:13.0000000Z
-    lastUpdateDescription: Thunderwolves, Fixed!
+    version: v1.4.18
+    lastUpdated: 2020-04-23T12:19:21.0000000Z
+    lastUpdateDescription: It's been a week. Here's some fixed things.
     indexUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.latest.bsi
     repositoryUrl: https://github.com/BSData/wh40k/releases/latest/download/wh40k.catpkg.json
     githubUrl: https://github.com/BSData/wh40k
