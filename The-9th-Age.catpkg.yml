@@ -2,18 +2,18 @@ location:
   github: BSData/The-9th-Age
 latest-release:
   api-response-headers:
-    Last-Modified: Wed, 01 Apr 2020 07:09:11 GMT
+    Last-Modified: Thu, 23 Apr 2020 07:58:38 GMT
   api-response-content:
-    tag_name: 2.2.10
-    name: Quality Update
-    published_at: 2020-04-01T07:09:11.0000000Z
+    tag_name: 2.2.11
+    name: Giant Update 1
+    published_at: 2020-04-23T07:58:38.0000000Z
   index:
     name: The-9th-Age
     description: 'Fantasy Battles: The 9th Age'
     battleScribeVersion: "2.03"
-    version: 2.2.10
-    lastUpdated: 2020-04-01T07:09:11.0000000Z
-    lastUpdateDescription: Quality Update
+    version: 2.2.11
+    lastUpdated: 2020-04-23T07:58:38.0000000Z
+    lastUpdateDescription: Giant Update 1
     indexUrl: https://github.com/BSData/The-9th-Age/releases/latest/download/The-9th-Age.latest.bsi
     repositoryUrl: https://github.com/BSData/The-9th-Age/releases/latest/download/The-9th-Age.catpkg.json
     githubUrl: https://github.com/BSData/The-9th-Age
