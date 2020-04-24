@@ -2,18 +2,18 @@ location:
   github: BSData/flamesofwar
 latest-release:
   api-response-headers:
-    Last-Modified: Thu, 23 Apr 2020 03:31:39 GMT
+    Last-Modified: Fri, 24 Apr 2020 17:30:30 GMT
   api-response-content:
-    tag_name: 1.1.9
-    name: D-Day British Released
-    published_at: 2020-04-23T03:31:39.0000000Z
+    tag_name: 1.1.10
+    name: Fixed debug information
+    published_at: 2020-04-24T17:30:30.0000000Z
   index:
     name: flamesofwar
     description: Flames of War
     battleScribeVersion: "2.03"
-    version: 1.1.9
-    lastUpdated: 2020-04-23T03:31:39.0000000Z
-    lastUpdateDescription: D-Day British Released
+    version: 1.1.10
+    lastUpdated: 2020-04-24T17:30:30.0000000Z
+    lastUpdateDescription: Fixed debug information
     indexUrl: https://github.com/BSData/flamesofwar/releases/latest/download/flamesofwar.latest.bsi
     repositoryUrl: https://github.com/BSData/flamesofwar/releases/latest/download/flamesofwar.catpkg.json
     githubUrl: https://github.com/BSData/flamesofwar
