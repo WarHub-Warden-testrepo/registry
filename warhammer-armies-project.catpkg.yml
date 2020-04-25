@@ -2,18 +2,18 @@ location:
   github: BSData/warhammer-armies-project
 latest-release:
   api-response-headers:
-    Last-Modified: Sun, 12 Apr 2020 14:15:29 GMT
+    Last-Modified: Sat, 25 Apr 2020 14:25:20 GMT
   api-response-content:
-    tag_name: V.1.5.0
-    name: Updates + Fixes
-    published_at: 2020-04-12T14:15:29.0000000Z
+    tag_name: v1.6.0
+    name: Albion update + bug fixes
+    published_at: 2020-04-25T14:25:20.0000000Z
   index:
     name: warhammer-armies-project
     description: Warhammer Armies Project
     battleScribeVersion: "2.03"
-    version: V.1.5.0
-    lastUpdated: 2020-04-12T14:15:29.0000000Z
-    lastUpdateDescription: Updates + Fixes
+    version: v1.6.0
+    lastUpdated: 2020-04-25T14:25:20.0000000Z
+    lastUpdateDescription: Albion update + bug fixes
     indexUrl: https://github.com/BSData/warhammer-armies-project/releases/latest/download/warhammer-armies-project.latest.bsi
     repositoryUrl: https://github.com/BSData/warhammer-armies-project/releases/latest/download/warhammer-armies-project.catpkg.json
     githubUrl: https://github.com/BSData/warhammer-armies-project
