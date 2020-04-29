@@ -2,11 +2,22 @@ location:
   github: BSData/marvel-crisis-protocol
 latest-release:
   api-response-headers:
-    Last-Modified: Mon, 13 Apr 2020 23:50:30 GMT
+    Last-Modified: Wed, 29 Apr 2020 16:21:30 GMT
   api-response-content:
-    tag_name: 1.5.1
-    name: Corvus Glaive & Proxima Midnight expansion added
-    published_at: 2020-04-13T23:50:30.0000000Z
-  index-response-error:
-    code: 404
+    tag_name: 1.5.2
+    name: Hawkeye and Professionals added
+    published_at: 2020-04-29T16:21:30.0000000Z
+  index:
+    name: marvel-crisis-protocol
+    description: Marvel Crisis Protocol
+    battleScribeVersion: "2.03"
+    version: 1.5.2
+    lastUpdated: 2020-04-29T16:21:30.0000000Z
+    lastUpdateDescription: Hawkeye and Professionals added
+    indexUrl: https://github.com/BSData/marvel-crisis-protocol/releases/latest/download/marvel-crisis-protocol.latest.bsi
+    repositoryUrl: https://github.com/BSData/marvel-crisis-protocol/releases/latest/download/marvel-crisis-protocol.catpkg.json
+    githubUrl: https://github.com/BSData/marvel-crisis-protocol
+    feedUrl: https://github.com/BSData/marvel-crisis-protocol/releases.atom
+    bugTrackerUrl: https://github.com/BSData/marvel-crisis-protocol/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/marvel-crisis-protocol
 
