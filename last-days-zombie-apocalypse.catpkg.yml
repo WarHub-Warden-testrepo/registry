@@ -2,18 +2,18 @@ location:
   github: BSData/last-days-zombie-apocalypse
 latest-release:
   api-response-headers:
-    Last-Modified: Tue, 28 Apr 2020 10:19:29 GMT
+    Last-Modified: Wed, 29 Apr 2020 14:21:16 GMT
   api-response-content:
-    tag_name: v2.0.2
-    name: Season book stat corrected
-    published_at: 2020-04-28T10:19:29.0000000Z
+    tag_name: V3.0.0
+    name: Campaign system added
+    published_at: 2020-04-29T14:21:16.0000000Z
   index:
     name: last-days-zombie-apocalypse
     description: 'Last Days: Zombie Apocalypse'
     battleScribeVersion: "2.03"
-    version: v2.0.2
-    lastUpdated: 2020-04-28T10:19:29.0000000Z
-    lastUpdateDescription: Season book stat corrected
+    version: V3.0.0
+    lastUpdated: 2020-04-29T14:21:16.0000000Z
+    lastUpdateDescription: Campaign system added
     indexUrl: https://github.com/BSData/last-days-zombie-apocalypse/releases/latest/download/last-days-zombie-apocalypse.latest.bsi
     repositoryUrl: https://github.com/BSData/last-days-zombie-apocalypse/releases/latest/download/last-days-zombie-apocalypse.catpkg.json
     githubUrl: https://github.com/BSData/last-days-zombie-apocalypse
