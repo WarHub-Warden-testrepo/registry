@@ -2,18 +2,18 @@ location:
   github: BSData/marvel-crisis-protocol
 latest-release:
   api-response-headers:
-    Last-Modified: Sat, 02 May 2020 21:01:50 GMT
+    Last-Modified: Wed, 06 May 2020 15:47:01 GMT
   api-response-content:
-    tag_name: 1.5.3
-    name: Ebony Maw added
-    published_at: 2020-05-02T21:01:50.0000000Z
+    tag_name: 1.5.4
+    name: Black Widow Agents of S.H.I.E.L.D., Heavy Firepower added and Ebony Maw Fixed
+    published_at: 2020-05-06T15:47:01.0000000Z
   index:
     name: marvel-crisis-protocol
     description: Marvel Crisis Protocol
     battleScribeVersion: "2.03"
-    version: 1.5.3
-    lastUpdated: 2020-05-02T21:01:50.0000000Z
-    lastUpdateDescription: Ebony Maw added
+    version: 1.5.4
+    lastUpdated: 2020-05-06T15:47:01.0000000Z
+    lastUpdateDescription: Black Widow Agents of S.H.I.E.L.D., Heavy Firepower added and Ebony Maw Fixed
     indexUrl: https://github.com/BSData/marvel-crisis-protocol/releases/latest/download/marvel-crisis-protocol.latest.bsi
     repositoryUrl: https://github.com/BSData/marvel-crisis-protocol/releases/latest/download/marvel-crisis-protocol.catpkg.json
     githubUrl: https://github.com/BSData/marvel-crisis-protocol
