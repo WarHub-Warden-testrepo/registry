@@ -2,18 +2,18 @@ location:
   github: BSData/horus-heresy
 latest-release:
   api-response-headers:
-    Last-Modified: Wed, 22 Apr 2020 12:40:13 GMT
+    Last-Modified: Thu, 07 May 2020 12:18:36 GMT
   api-response-content:
-    tag_name: v13.011
-    name: Shattered Legion After Isstvan RoW fix, and Ashen Circle fix.
-    published_at: 2020-04-22T12:40:13.0000000Z
+    tag_name: v13.012
+    name: Hidden Fixes part 1
+    published_at: 2020-05-07T12:18:36.0000000Z
   index:
     name: horus-heresy
     description: Horus Heresy
     battleScribeVersion: "2.03"
-    version: v13.011
-    lastUpdated: 2020-04-22T12:40:13.0000000Z
-    lastUpdateDescription: Shattered Legion After Isstvan RoW fix, and Ashen Circle fix.
+    version: v13.012
+    lastUpdated: 2020-05-07T12:18:36.0000000Z
+    lastUpdateDescription: Hidden Fixes part 1
     indexUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.latest.bsi
     repositoryUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.catpkg.json
     githubUrl: https://github.com/BSData/horus-heresy
