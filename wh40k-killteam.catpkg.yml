@@ -2,18 +2,18 @@ location:
   github: BSData/wh40k-killteam
 latest-release:
   api-response-headers:
-    Last-Modified: Tue, 31 Mar 2020 09:11:13 GMT
+    Last-Modified: Mon, 11 May 2020 11:41:40 GMT
   api-response-content:
-    tag_name: v1.4.17
-    name: Faster Banshees and Pustulent Leaders
-    published_at: 2020-03-31T09:11:13.0000000Z
+    tag_name: v1.4.18
+    name: Ssh!
+    published_at: 2020-05-11T11:41:40.0000000Z
   index:
     name: wh40k-killteam
     description: 'Warhammer 40,000: Kill Team (2018)'
     battleScribeVersion: "2.03"
-    version: v1.4.17
-    lastUpdated: 2020-03-31T09:11:13.0000000Z
-    lastUpdateDescription: Faster Banshees and Pustulent Leaders
+    version: v1.4.18
+    lastUpdated: 2020-05-11T11:41:40.0000000Z
+    lastUpdateDescription: Ssh!
     indexUrl: https://github.com/BSData/wh40k-killteam/releases/latest/download/wh40k-killteam.latest.bsi
     repositoryUrl: https://github.com/BSData/wh40k-killteam/releases/latest/download/wh40k-killteam.catpkg.json
     githubUrl: https://github.com/BSData/wh40k-killteam

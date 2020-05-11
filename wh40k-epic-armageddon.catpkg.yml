@@ -2,11 +2,22 @@ location:
   github: BSData/wh40k-epic-armageddon
 latest-release:
   api-response-headers:
-    Last-Modified: Sun, 19 Apr 2020 17:04:52 GMT
+    Last-Modified: Mon, 11 May 2020 12:13:38 GMT
   api-response-content:
-    tag_name: "33.03"
-    name: Konig Tank Regiment update
-    published_at: 2020-04-19T17:04:52.0000000Z
-  index-response-error:
-    code: 404
+    tag_name: "33.04"
+    name: Enhancement to warn if too many Commissars selected
+    published_at: 2020-05-11T12:13:38.0000000Z
+  index:
+    name: wh40k-epic-armageddon
+    description: Warhammer 40,000 Epic Armageddon
+    battleScribeVersion: "2.03"
+    version: "33.04"
+    lastUpdated: 2020-05-11T12:13:38.0000000Z
+    lastUpdateDescription: Enhancement to warn if too many Commissars selected
+    indexUrl: https://github.com/BSData/wh40k-epic-armageddon/releases/latest/download/wh40k-epic-armageddon.latest.bsi
+    repositoryUrl: https://github.com/BSData/wh40k-epic-armageddon/releases/latest/download/wh40k-epic-armageddon.catpkg.json
+    githubUrl: https://github.com/BSData/wh40k-epic-armageddon
+    feedUrl: https://github.com/BSData/wh40k-epic-armageddon/releases.atom
+    bugTrackerUrl: https://github.com/BSData/wh40k-epic-armageddon/issues
+    reportBugUrl: http://battlescribedata.appspot.com/#/repo/wh40k-epic-armageddon
 
