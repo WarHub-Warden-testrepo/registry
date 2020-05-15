@@ -2,18 +2,18 @@ location:
   github: BSData/warhammer-age-of-sigmar
 latest-release:
   api-response-headers:
-    Last-Modified: Tue, 14 Apr 2020 15:44:54 GMT
+    Last-Modified: Fri, 15 May 2020 13:12:26 GMT
   api-response-content:
-    tag_name: v2.1.29
-    name: FAQ Enhanced Aztec Lizards Riding Dinosaurs
-    published_at: 2020-04-14T15:44:54.0000000Z
+    tag_name: v2.1.30
+    name: So Many Fixes. Well ... Like 10 Fixes.
+    published_at: 2020-05-15T13:12:26.0000000Z
   index:
     name: warhammer-age-of-sigmar
     description: 'Warhammer: Age of Sigmar'
     battleScribeVersion: "2.03"
-    version: v2.1.29
-    lastUpdated: 2020-04-14T15:44:54.0000000Z
-    lastUpdateDescription: FAQ Enhanced Aztec Lizards Riding Dinosaurs
+    version: v2.1.30
+    lastUpdated: 2020-05-15T13:12:26.0000000Z
+    lastUpdateDescription: So Many Fixes. Well ... Like 10 Fixes.
     indexUrl: https://github.com/BSData/warhammer-age-of-sigmar/releases/latest/download/warhammer-age-of-sigmar.latest.bsi
     repositoryUrl: https://github.com/BSData/warhammer-age-of-sigmar/releases/latest/download/warhammer-age-of-sigmar.catpkg.json
     githubUrl: https://github.com/BSData/warhammer-age-of-sigmar
