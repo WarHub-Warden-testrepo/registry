@@ -2,18 +2,18 @@ location:
   github: BSData/horus-heresy
 latest-release:
   api-response-headers:
-    Last-Modified: Fri, 15 May 2020 09:19:04 GMT
+    Last-Modified: Sun, 17 May 2020 14:23:47 GMT
   api-response-content:
-    tag_name: v13.017
-    name: SpaceWolves Ironpriest fix
-    published_at: 2020-05-15T09:19:04.0000000Z
+    tag_name: v13.018
+    name: Blackshield & Sub-Orbital fixes
+    published_at: 2020-05-17T14:23:47.0000000Z
   index:
     name: horus-heresy
     description: Horus Heresy
     battleScribeVersion: "2.03"
-    version: v13.017
-    lastUpdated: 2020-05-15T09:19:04.0000000Z
-    lastUpdateDescription: SpaceWolves Ironpriest fix
+    version: v13.018
+    lastUpdated: 2020-05-17T14:23:47.0000000Z
+    lastUpdateDescription: Blackshield & Sub-Orbital fixes
     indexUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.latest.bsi
     repositoryUrl: https://github.com/BSData/horus-heresy/releases/latest/download/horus-heresy.catpkg.json
     githubUrl: https://github.com/BSData/horus-heresy
