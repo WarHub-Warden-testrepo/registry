@@ -1,5 +1,7 @@
 # registry
 
+> ⚠ This has been now migrated to https://github.com/BSData/gallery
+
 This repository contains a registry of all catpkg repositories
 that get included in the Gallery.
 
